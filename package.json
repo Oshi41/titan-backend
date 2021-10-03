@@ -1,0 +1,36 @@
+{
+  "name": "titabk-background",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon NODE_ENV=production",
+    "start": "ts-node --transpile-only ./src/index.ts NODE_ENV=production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "latest",
+    "class-transformer": "latest",
+    "class-validator": "latest",
+    "express": "latest",
+    "md5": "latest",
+    "multer": "latest",
+    "reflect-metadata": "latest",
+    "routing-controllers": "latest",
+    "sqlite3": "latest"
+  },
+  "devDependencies": {
+    "@types/body-parser": "latest",
+    "@types/express": "latest",
+    "@types/md5": "latest",
+    "@types/multer": "latest",
+    "@types/node": "latest",
+    "@types/sqlite3": "latest",
+    "nodemon": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  }
+}
