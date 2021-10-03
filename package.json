@@ -12,15 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "latest",
-    "class-transformer": "latest",
-    "class-validator": "latest",
     "express": "latest",
     "md5": "latest",
-    "multer": "latest",
-    "reflect-metadata": "latest",
-    "routing-controllers": "latest",
-    "sqlite3": "latest"
+    "sqlite3": "latest",
+    "body-parser": "latest"
   },
   "devDependencies": {
     "@types/body-parser": "latest",

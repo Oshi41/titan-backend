@@ -1,17 +1,18 @@
 import * as fs from 'fs';
-import 'reflect-metadata'
 import {Express} from 'express-serve-static-core';
 import path from "path";
-import {createExpressServer} from "routing-controllers";
+import express from  'express';
 import {readConfig} from "./config";
 import {Md5pass} from "./password/md5pass";
 import {PassTransformer} from "./password/passTransformer";
 import {PlainPass} from "./password/plainPass";
-import {LoginController} from "./routes/loginController";
-import {RegisterController} from "./routes/registerController";
+import {handleLogin} from "./routes/loginController";
+import {handleRegister,} from "./routes/registerController";
 import {SqliteStore} from "./store/sqliteStore";
 import {IStore} from "./store/store";
 import {ConfigTypes, Digest, StoreType} from "./types/types";
+import {handleBusy} from "./routes/busyRouter";
+import bodyParser from "body-parser";
 
 /**
  * Получаю возможный шифровщик пароля
@@ -66,15 +67,25 @@ export const pass: PassTransformer = getPassTransformer(config.digest);
  */
 export const store: IStore = getStore(config.store);
 
-const app: Express = createExpressServer(({
-    routePrefix: `/api/${API_VERSION}`,
-    controllers: [
-        RegisterController,
-        LoginController,
-        // DefaultRouter,
-    ],
-    defaultErrorHandler: true,
-}));
+
+const app = express();
+
+const apiRouter = express.Router();
+let jsonMiddleware = bodyParser.json();
+
+apiRouter.post('/register', jsonMiddleware, handleRegister);
+apiRouter.get('/login', handleLogin);
+apiRouter.get('/busy', handleBusy);
+
+// роутер
+app.use('/api/' + API_VERSION, apiRouter);
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve('./frontend/index.html'));
+})
+
+// статические файлы
+app.use(jsonMiddleware);
+app.use(express.static(path.resolve('./frontend')));
 
 app.listen(config.port);
 

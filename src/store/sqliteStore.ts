@@ -21,11 +21,12 @@ export class SqliteStore implements IStore {
         // создал схему, если все хорошо
         this._database.run(`CREATE TABLE IF NOT EXISTS ${this.tableName}
                             (
-                                login varchar(30) PRIMARY_KEY,
-                                pass varchar(30)
-                            )`, (result: RunResult, err: Error | null) => {
+                                login varchar(30) PRIMARY KEY,
+                                pass varchar(60)
+                            )`, (err: Error | null) => {
             if (err){
                 console.log(err);
+                throw new Error(err.message);
             }
         });
     }

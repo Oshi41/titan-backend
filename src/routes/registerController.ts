@@ -1,46 +1,54 @@
-import 'reflect-metadata'
-import {BadRequestError, Body, Controller, HttpError, InternalServerError, Post, Res} from "routing-controllers";
-import {Response} from 'express';
+import {Request, Response} from 'express';
 import {LoginRequest} from "../types/types";
 import {store as _store, pass as _transformer} from '../index';
+import {NextFunction} from "express-serve-static-core";
 
-@Controller()
-export class RegisterController {
-    @Post('/register')
-    postRegister(@Res() response: Response, @Body({required: true}) body: LoginRequest) {
-
-        if (!body.login){
-            throw new BadRequestError('No login provided');
-        }
-
-        if (body.pass.length < 5){
-            throw new BadRequestError('Password is empty or less than 5 symbols length');
-        }
-
-        // Сначала смотрим свободно ли
-        return _store.busy(body.login)
-            .then(x => {
-                // свободно
-                if (!x.valueOf()) {
-                    // пытаемся вписать нового юзера
-                    return _store.add(body.login, _transformer.transform(body.pass));
-                }
-
-                throw new BadRequestError('already taken');
-            })
-            .then(x => {
-                // вставка прошла успешно
-                if (x.valueOf()) {
-                    return true;
-                }
-
-                throw new InternalServerError('error in database');
-            })
-            .then(x => 'success')
-            .catch(x => {
-                if (typeof x === 'string') {
-                    throw new BadRequestError(x);
-                }
-            })
+/**
+ * ОБрабатываю регистрацию
+ * @param request - запрос
+ * @param response - ответ
+ * @param next - middleware
+ */
+export const handleRegister = (request: Request, response: Response, next: NextFunction) => {
+    let body = request.body as LoginRequest;
+    if (!body) {
+        response
+            .status(403)
+            .send('No body provided');
+        return;
     }
-}
+
+    if (!body.login || body.login.length > 30) {
+        response
+            .status(403)
+            .send('No login provided or length is greater than 30');
+        return;
+    }
+
+    if (!body.pass || body.pass.length < 5 || body.pass.length > 60) {
+        response
+            .status(403)
+            .send('Password is empty or less than 5 symbols length or more than 60 symbols length');
+        return;
+    }
+
+    _store.busy(body.login)
+        .then(x => {
+            if (x.valueOf()) {
+                return Promise.reject('Login is busy');
+            }
+
+            return _store.add(body.login, _transformer.transform(body.pass));
+        })
+        .then(x => {
+            if (x.valueOf()) {
+                response.sendStatus(200);
+                return;
+            }
+
+            response.status(500).send('Error during database injection');
+        })
+        .catch(x => {
+            response.status(403).send(x);
+        })
+};
