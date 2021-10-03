@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import {Express} from 'express-serve-static-core';
+const cors = require('cors');
 import path from "path";
-import express from  'express';
+import express from 'express';
 import {readConfig} from "./config";
 import {Md5pass} from "./password/md5pass";
 import {PassTransformer} from "./password/passTransformer";
@@ -77,15 +77,17 @@ apiRouter.post('/register', jsonMiddleware, handleRegister);
 apiRouter.get('/login', handleLogin);
 apiRouter.get('/busy', handleBusy);
 
-// роутер
-app.use('/api/' + API_VERSION, apiRouter);
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve('./frontend/index.html'));
-})
+app.use(cors());
 
 // статические файлы
 app.use(jsonMiddleware);
 app.use(express.static(path.resolve('./frontend')));
+
+// роутер
+app.use('/api/' + API_VERSION, apiRouter);
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve('./frontend/index.html'));
+});
 
 app.listen(config.port);
 

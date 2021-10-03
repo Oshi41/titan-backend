@@ -15,7 +15,8 @@
     "express": "latest",
     "md5": "latest",
     "sqlite3": "latest",
-    "body-parser": "latest"
+    "body-parser": "latest",
+    "cors": "latest"
   },
   "devDependencies": {
     "@types/body-parser": "latest",
