@@ -1,4 +1,3 @@
-import {exists} from "fs";
 import * as fs from 'fs';
 
 const cors = require('cors');
