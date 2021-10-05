@@ -1,0 +1,58 @@
+[
+  {
+    "modid": "Forge",
+    "page": "https://files.minecraftforge.net/net/minecraftforge/forge/"
+  },
+  {
+    "modid": "CodeChickenCore",
+    "page": "https://github.com/Chicken-Bones/CodeChickenLib"
+  },
+  {
+    "modid": "ivtoolkit",
+    "page": "https://www.curseforge.com/minecraft/mc-mods/ivtoolkit"
+  },
+  {
+    "modid": "NotEnoughItems",
+    "page": "https://minecraft.fandom.com/ru/wiki/Not_Enough_Items"
+  },
+  {
+    "modid": "Enchiridion",
+    "page": "https://www.curseforge.com/minecraft/mc-mods/enchiridion"
+  },
+  {
+    "modid": "Enchiridion2",
+    "page": "https://www.curseforge.com/minecraft/mc-mods/enchiridion"
+  },
+  {
+    "modid": "exnihilo",
+    "page": "https://minecraft.fandom.com/ru/wiki/Ex_Nihilo"
+  },
+  {
+    "modid": "IC2",
+    "page": "https://minecraft.fandom.com/ru/wiki/IndustrialCraft_2"
+  },
+  {
+    "modid": "AdvancedSolarPanel",
+    "page": "https://minecraft.fandom.com/ru/wiki/Advanced_Solar_Panels"
+  },
+  {
+    "modid": "appliedenergistics2",
+    "page": "https://ae-mod.info"
+  },
+  {
+    "modid": "bdlib",
+    "page": "https://www.curseforge.com/minecraft/mc-mods/bdlib"
+  },
+  {
+    "modid": "ae2stuff",
+    "page": "https://ftb.fandom.com/wiki/AE2_Stuff"
+  },
+  {
+    "modid": "AFSU",
+    "page": "https://minecraft.fandom.com/ru/wiki/AFSU_mod"
+  },
+  {
+    "modid": "aquaticabyss",
+    "page": "https://www.curseforge.com/minecraft/mc-mods/aquatic-abyss"
+  }
+]

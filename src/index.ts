@@ -1,4 +1,6 @@
+import {exists} from "fs";
 import * as fs from 'fs';
+
 const cors = require('cors');
 import path from "path";
 import express from 'express';
@@ -6,6 +8,8 @@ import {readConfig} from "./config";
 import {Md5pass} from "./password/md5pass";
 import {PassTransformer} from "./password/passTransformer";
 import {PlainPass} from "./password/plainPass";
+import {handleDownload} from "./routes/downloadController";
+import {handleAllServers, handleServerInfo} from "./routes/handleServerInfo";
 import {handleLogin} from "./routes/loginController";
 import {handleRegister,} from "./routes/registerController";
 import {SqliteStore} from "./store/sqliteStore";
@@ -55,7 +59,7 @@ const getStore = (type: StoreType): IStore => {
 export const API_VERSION = '1.0';
 
 // получил конфиг файл
-const config: ConfigTypes = readConfig(path.resolve('./_config.json'));
+export const config: ConfigTypes = readConfig(path.resolve('./_config.json'));
 
 /**
  * текущий шифровщик пароля
@@ -76,6 +80,9 @@ let jsonMiddleware = bodyParser.json();
 apiRouter.post('/register', jsonMiddleware, handleRegister);
 apiRouter.get('/login', handleLogin);
 apiRouter.get('/busy', handleBusy);
+apiRouter.get('/download', handleDownload);
+apiRouter.get('/minecraftServer', handleServerInfo);
+apiRouter.get('/myServers', handleAllServers);
 
 app.use(cors());
 

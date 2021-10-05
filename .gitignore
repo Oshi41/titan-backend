@@ -3,3 +3,5 @@
 /build
 /_store
 _config.json
+/_download/
+/_servers/
