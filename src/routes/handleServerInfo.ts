@@ -38,7 +38,7 @@ export const handleServerInfo = async (request: Request, response: Response, nex
             throw new Error('no server info returned');
         }
     } catch (e) {
-        response.send(403).send(e);
+        response.status(403).send(e);
         return
     }
 
@@ -51,7 +51,7 @@ export const handleServerInfo = async (request: Request, response: Response, nex
             throw new Error('no forge info returned');
         }
     } catch (e) {
-        response.send(403).send(e);
+        response.status(403).send(e);
         return
     }
 
