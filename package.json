@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon NODE_ENV=production",
     "start": "ts-node --transpile-only ./src/index.ts NODE_ENV=production",
-    "setup": "ts-node ./setup.ts --sashok \"C:\\Users\\a.sheglov\\Downloads\\sashok\" --front \"1\" --back \"2\""
+    "setup": "ts-node ./setup.ts --sashok \"C:\\Users\\oshi4\\OneDrive\\Документы\\titan\" --front \"1\" --back \"2\""
   },
   "keywords": [],
   "author": "",
