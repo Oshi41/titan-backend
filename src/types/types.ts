@@ -6,7 +6,7 @@ export type Digest = 'plain' | 'md5';
 /**
  * Тип хранилища
  */
-export type StoreType = 'sqlite';
+export type StoreType = 'sqlite' | 'ely.by';
 
 /**
  * Описание конфига приложения

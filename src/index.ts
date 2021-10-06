@@ -82,6 +82,7 @@ apiRouter.get('/busy', handleBusy);
 apiRouter.get('/download', handleDownload);
 apiRouter.get('/minecraftServer', handleServerInfo);
 apiRouter.get('/myServers', handleAllServers);
+apiRouter.get('/storeType', (req, res, next) => res.send(config.store));
 
 app.use(cors());
 
