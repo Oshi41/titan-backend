@@ -1,34 +1,38 @@
-import {store as _store, pass as _transformer} from '../index';
+import {store as _store} from '../index';
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
 
 /**
- * ОБрабатываю регистрацию
+ * ОБрабатываю вход в систему
  * @param request - запрос
  * @param response - ответ
  * @param next - middleware
  */
 export const handleLogin = (request: Request, response: Response, next: NextFunction) => {
     let login = request.query['login'] as string;
-    if (!login){
+    if (!login) {
         response.status(403)
             .send('No login provided');
         return;
     }
 
     let pass = request.query['pass'] as string;
-    if (!pass){
+    if (!pass) {
         response.status(403)
             .send('No password provided');
         return;
     }
 
-    _store.check(login, _transformer.transform(pass))
+    _store.check(login, pass)
         .then(x => {
-            response.status(200)
-                .send(x.valueOf() ? `OK:${login}` : 'Login or password or both are incorrect');
+            if (x.login !== login) {
+                throw new Error("Login or password or both are incorrect");
+            }
+
+            response.send(`OK:${login}`);
         })
         .catch(x => {
-            response.status(403).send(x);
+            console.log(x);
+            response.status(403).send(x.toString());
         })
 }

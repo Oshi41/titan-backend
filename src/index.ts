@@ -11,18 +11,17 @@ import {handleDownload} from "./routes/downloadController";
 import {handleAllServers, handleServerInfo} from "./routes/handleServerInfo";
 import {handleLogin} from "./routes/loginController";
 import {handleRegister,} from "./routes/registerController";
+import {handleAuth} from "./routes/yggdrasil";
+import {ElyByStore} from "./store/elyByStore";
+import {FileStore} from "./store/fileStore";
 import {SqliteStore} from "./store/sqliteStore";
-import {IStore} from "./store/store";
-import {ConfigTypes, Digest, StoreType} from "./types/types";
+import {Store} from "./store/store";
+import {ConfigTypes, Digest, FileConfig, StoreType} from "./types/types";
 import {handleBusy} from "./routes/busyRouter";
 import bodyParser from "body-parser";
 
-/**
- * Получаю возможный шифровщик пароля
- * @param type
- */
-const getPassTransformer = (type: Digest): PassTransformer => {
-    switch (type) {
+const getPassTransformer = (digest: Digest): PassTransformer => {
+    switch (digest) {
         case "md5":
             return new Md5pass();
 
@@ -30,15 +29,16 @@ const getPassTransformer = (type: Digest): PassTransformer => {
             return new PlainPass();
 
         default:
-            throw new Error('unknown type: ' + type);
+            throw new Error('Unknown pass type: ' + digest);
     }
-};
+}
+
 
 /**
  * Возвращаю хранилище
- * @param type - тип хранилища
+ * @param config
  */
-const getStore = (type: StoreType): IStore => {
+const getStore = (config: ConfigTypes): Store => {
     const dirPath: string = './_store';
 
     if (!fs.existsSync(dirPath)) {
@@ -46,29 +46,30 @@ const getStore = (type: StoreType): IStore => {
     }
 
 
-    switch (type) {
+    switch (config.store.type) {
         case "sqlite":
-            return new SqliteStore(dirPath + '/users.sqlite');
+            // @ts-ignore
+            return new SqliteStore(getPassTransformer(config.store.config.passDigest), config.store.config, dirPath + '/users.sqlite');
 
-        default:
-            throw new Error('unknown store type: ' + type);
+        case "ely.by":
+            return new ElyByStore();
+
+        case "file":
+            // @ts-ignore
+            return new FileStore(getPassTransformer(config.store.config.digest), config.store.config);
     }
+
+    throw new Error('unknown store type: ' + config.store.type);
 }
 
 export const API_VERSION = '1.0';
 
 // получил конфиг файл
 export const config: ConfigTypes = readConfig(path.resolve('./_config.json'));
-
-/**
- * текущий шифровщик пароля
- */
-export const pass: PassTransformer = getPassTransformer(config.digest);
-
 /**
  * текущее хранилище
  */
-export const store: IStore = getStore(config.store);
+export const store: Store = getStore(config);
 
 
 const app = express();
@@ -83,6 +84,8 @@ apiRouter.get('/download', handleDownload);
 apiRouter.get('/minecraftServer', handleServerInfo);
 apiRouter.get('/myServers', handleAllServers);
 apiRouter.get('/storeType', (req, res, next) => res.send(config.store));
+
+apiRouter.post('/authenticate', handleAuth);
 
 app.use(cors());
 

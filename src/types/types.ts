@@ -6,7 +6,7 @@ export type Digest = 'plain' | 'md5';
 /**
  * Тип хранилища
  */
-export type StoreType = 'sqlite' | 'ely.by';
+export type StoreType = 'sqlite' | 'ely.by' | 'file';
 
 /**
  * Описание конфига приложения
@@ -20,12 +20,10 @@ export interface ConfigTypes {
     /**
      * Тип хранилища
      */
-    store: StoreType;
-
-    /**
-     * Тип хранения пароля
-     */
-    digest: Digest;
+    store: {
+        type: StoreType,
+        config?: SqLiteConfig | FileConfig
+    }
 }
 
 /**
@@ -53,9 +51,24 @@ export interface User {
     login: string;
 
     /**
-     * MD5 hash пароля
+     * Пароль
      */
-    pass: string;
+    pass?: string;
+
+    /**
+     * UUID пользователя
+     */
+    uuid?: string;
+
+    /**
+     * токен доступа
+     */
+    access?: string;
+
+    /**
+     * Сервер
+     */
+    server?: string;
 }
 
 /**
@@ -125,5 +138,69 @@ export interface ModInfo {
  */
 export interface ExtraServerInfo {
     address: string;
+}
+
+/**
+ * Настройка sql
+ */
+export interface SqLiteConfig {
+    /**
+     * Таблица
+     */
+    table: string;
+
+    /**
+     * ID колонки
+     */
+    uuidColumn: string;
+
+    /**
+     * Поле с именами пользователей
+     */
+    usernameColumn: string;
+
+    /**
+     * Поле с accessToken
+     */
+    accessTokenColumn: string;
+
+    /**
+     * Поле с serverID
+     */
+    serverIDColumn: string;
+
+    /**
+     *
+     */
+    passwordColumn: string;
+
+    /**
+     * Как храним пароль
+     */
+    passDigest: Digest;
+}
+
+/**
+ * Настройки для файлов
+ */
+export interface FileConfig {
+    /**
+     * Путь к файлу
+     */
+    file: string;
+
+    /**
+     * Тип хранения для файла
+     */
+    digest: Digest;
+}
+
+/**
+ * Описание пользователя, хранящееся в файле
+ */
+export interface FileUser {
+    username: string;
+    password: string;
+    ip: string;
 }
 

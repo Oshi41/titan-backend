@@ -13,13 +13,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "md5": "^2.3.0",
-    "sqlite3": "^5.0.2",
+    "axios": "^0.22.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "md5": "^2.3.0",
     "minecraft-lookup": "^1.1.36",
-    "minecraft-protocol": "^1.26.5"
+    "minecraft-protocol": "^1.26.5",
+    "sqlite3": "^5.0.2",
+    "yggdrasil": "^1.6.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.1",
@@ -28,6 +31,7 @@
     "@types/multer": "^1.4.7",
     "@types/node": "^16.10.2",
     "@types/sqlite3": "^3.1.7",
+    "@types/uuid": "^8.3.1",
     "glob": "^7.2.0",
     "@types/glob": "^7.1.4",
     "cfg-reader": "^2.3.0",

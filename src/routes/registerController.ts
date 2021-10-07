@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {LoginRequest} from "../types/types";
-import {store as _store, pass as _transformer} from '../index';
+import {store as _store} from '../index';
 import {NextFunction} from "express-serve-static-core";
 
 /**
@@ -38,7 +38,7 @@ export const handleRegister = (request: Request, response: Response, next: NextF
                 return Promise.reject('Login is busy');
             }
 
-            return _store.add(body.login, _transformer.transform(body.pass));
+            return _store.add(body.login, body.pass);
         })
         .then(x => {
             if (x.valueOf()) {

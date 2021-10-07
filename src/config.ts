@@ -1,10 +1,16 @@
+import path from "node:path";
 import {ConfigTypes} from "./types/types";
 import * as fs from 'fs';
 
 const defaults: ConfigTypes = {
     port: 5001,
-    digest: 'md5',
-    store: 'sqlite',
+    store: {
+        type: 'file',
+        config: {
+            file: path.resolve('./_store/auth.cfg'),
+            digest: 'md5',
+        }
+    }
 }
 
 /**
