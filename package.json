@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon NODE_ENV=production",
     "start": "ts-node --transpile-only ./src/index.ts NODE_ENV=production",
-    "setup": "ts-node ./setup.ts --sashok \"C:\\Users\\oshi4\\OneDrive\\Документы\\titan\" --front \"1\" --back \"2\""
+    "setup": "ts-node ./setup.ts --sashok \"C:\\Users\\oshi4\\OneDrive\\Документы\\titan\" --front \"1\" --back \"2\"",
+    "start-node": "forever start ts-node --transpile-only ./src/index.ts NODE_ENV=production"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,8 @@
     "sqlite3": "^5.0.2",
     "yggdrasil": "^1.6.1",
     "uuid": "^8.3.2",
-    "node-machine-id": "^1.1.12"
+    "node-machine-id": "^1.1.12",
+    "forever": "^4.0.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.1",
