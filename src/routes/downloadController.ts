@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
 import * as fs from "fs";
-import path from "node:path";
+import path from "path";
 
 /**
  * Папка, где лежат разрешенные файлы для скачивания

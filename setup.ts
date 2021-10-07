@@ -1,6 +1,6 @@
 import * as dns from 'dns';
 import * as os from 'os';
-import path from 'node:path';
+import path from "path";
 import {promises as fs} from 'fs';
 import {glob, GlobSync} from 'glob';
 

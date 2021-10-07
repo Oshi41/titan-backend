@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
 import fs from "fs";
-import path from "node:path";
+import path from "import path from "path";";
 import {ForgeInfo, ModInfo, ExtraServerInfo, ServerInfo} from "../types/types";
 import {server as minecraftServer} from "minecraft-lookup";
 import * as mc from 'minecraft-protocol';
