@@ -1,12 +1,18 @@
 /**
  * Тип шифрования пароля
  */
+import {SqliteStore} from "../store/sqliteStore";
+
 export type Digest = 'plain' | 'md5';
 
 /**
  * Тип хранилища
  */
-export type StoreType = 'sqlite' | 'ely.by' | 'file';
+export enum StoreType {
+    SQLITE = 'sqlite',
+    ELY = 'ely.by',
+    FILE = 'file'
+}
 
 /**
  * Описание конфига приложения
@@ -21,8 +27,9 @@ export interface ConfigTypes {
      * Тип хранилища
      */
     store: {
-        type: StoreType,
-        config?: SqLiteConfig | FileConfig
+        [StoreType.SQLITE]?: SqLiteConfig;
+        [StoreType.FILE]?: FileConfig;
+        [StoreType.ELY]?: '';
     }
 }
 
@@ -185,9 +192,19 @@ export interface SqLiteConfig {
  */
 export interface FileConfig {
     /**
-     * Путь к файлу
+     * Путь к cfg файлу с паролями
      */
-    file: string;
+    users: string;
+
+    /**
+     * Путь к файлу с uuid
+     */
+    uuids: string
+
+    /**
+     * Путь к файлу с серверу
+     */
+    serverWhiteList: string;
 
     /**
      * Тип хранения для файла

@@ -25,6 +25,12 @@ type AuthResponse = {
 
 const debugUuid = randomUuid();
 
+export const handleMeta = (request: Request, response: Response, next: NextFunction) => {
+    response.json({
+        meta: {}
+    })
+};
+
 /**
  *
  * @param request

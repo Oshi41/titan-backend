@@ -22,7 +22,8 @@
     "minecraft-protocol": "^1.26.5",
     "sqlite3": "^5.0.2",
     "yggdrasil": "^1.6.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "node-machine-id": "^1.1.12"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.1",

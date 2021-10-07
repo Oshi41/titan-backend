@@ -1,24 +1,25 @@
-import * as fs from 'fs';
-
-const cors = require('cors');
-import path from "path";
+import bodyParser from "body-parser";
 import express from 'express';
+import * as fs from 'fs';
+import path from "path";
 import {readConfig} from "./config";
 import {Md5pass} from "./password/md5pass";
 import {PassTransformer} from "./password/passTransformer";
 import {PlainPass} from "./password/plainPass";
+import {handleBusy} from "./routes/busyRouter";
 import {handleDownload} from "./routes/downloadController";
 import {handleAllServers, handleServerInfo} from "./routes/handleServerInfo";
 import {handleLogin} from "./routes/loginController";
 import {handleRegister,} from "./routes/registerController";
-import {handleAuth} from "./routes/yggdrasil";
+import {handleUuid} from "./routes/uuidController";
+import {handleAuth, handleMeta} from "./routes/yggdrasil";
 import {ElyByStore} from "./store/elyByStore";
 import {FileStore} from "./store/fileStore";
 import {SqliteStore} from "./store/sqliteStore";
 import {Store} from "./store/store";
-import {ConfigTypes, Digest, FileConfig, StoreType} from "./types/types";
-import {handleBusy} from "./routes/busyRouter";
-import bodyParser from "body-parser";
+import {ConfigTypes, Digest, FileConfig, SqLiteConfig, StoreType} from "./types/types";
+
+const cors = require('cors');
 
 const getPassTransformer = (digest: Digest): PassTransformer => {
     switch (digest) {
@@ -45,21 +46,27 @@ const getStore = (config: ConfigTypes): Store => {
         fs.mkdirSync(dirPath);
     }
 
+    const keys: string[] = Object.keys(config.store);
 
-    switch (config.store.type) {
-        case "sqlite":
-            // @ts-ignore
-            return new SqliteStore(getPassTransformer(config.store.config.passDigest), config.store.config, dirPath + '/users.sqlite');
+    if (keys?.length === 1) {
 
-        case "ely.by":
-            return new ElyByStore();
+        switch (keys[0] as StoreType) {
+            case StoreType.SQLITE:
+                // @ts-ignore
+                const sqlCfg: SqLiteConfig = config.store[StoreType.SQLITE];
+                return new SqliteStore(getPassTransformer(sqlCfg.passDigest), sqlCfg, dirPath + '/users.sqlite');
 
-        case "file":
-            // @ts-ignore
-            return new FileStore(getPassTransformer(config.store.config.digest), config.store.config);
+            case StoreType.ELY:
+                return new ElyByStore();
+
+            case StoreType.FILE:
+                // @ts-ignore
+                const fileCfg: FileConfig = config.store[StoreType.FILE];
+                return new FileStore(getPassTransformer(fileCfg.digest), fileCfg);
+        }
     }
 
-    throw new Error('unknown store type: ' + config.store.type);
+    throw new Error('unknown store type');
 }
 
 export const API_VERSION = '1.0';
@@ -83,9 +90,12 @@ apiRouter.get('/busy', handleBusy);
 apiRouter.get('/download', handleDownload);
 apiRouter.get('/minecraftServer', handleServerInfo);
 apiRouter.get('/myServers', handleAllServers);
+apiRouter.get('/uuid', handleUuid);
 apiRouter.get('/storeType', (req, res, next) => res.send(config.store));
 
-apiRouter.post('/authenticate', handleAuth);
+const yggdrasilRouter = express.Router();
+yggdrasilRouter.get('/', handleMeta);
+yggdrasilRouter.post('*', handleAuth);
 
 app.use(cors());
 
@@ -94,6 +104,7 @@ app.use(jsonMiddleware);
 app.use(express.static(path.resolve('./frontend')));
 
 // роутер
+app.use('/api/' + API_VERSION + '/yggdrasil', yggdrasilRouter);
 app.use('/api/' + API_VERSION, apiRouter);
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('./frontend/index.html'));
