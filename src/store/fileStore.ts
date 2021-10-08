@@ -16,9 +16,11 @@ type Whitelist = {
 
 export class FileStore extends Store {
     private config: FileConfig;
+    private pass: PassTransformer;
 
     constructor(pass: PassTransformer, config: FileConfig) {
         super(pass);
+        this.pass = pass;
         this.config = config;
 
         fs.writeFile(config.users, '', {flag: 'wx'})
@@ -36,7 +38,7 @@ export class FileStore extends Store {
             admin = {
                 login,
                 uuid: x,
-                pass: uuid(),
+                pass: pass.transform(uuid()),
                 access: uuid(),
                 server: uuid(),
             };
