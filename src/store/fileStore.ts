@@ -39,7 +39,7 @@ export class FileStore extends Store {
                 login,
                 uuid: x,
                 pass: pass.transform(uuid()),
-                access: uuid(),
+                access: uuid().replace('-', ''),
                 server: uuid(),
             };
 
