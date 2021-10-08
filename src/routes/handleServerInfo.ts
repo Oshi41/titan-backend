@@ -5,6 +5,7 @@ import path from 'path';
 import { ForgeInfo, ModInfo, ExtraServerInfo, ServerInfo } from '../types/types';
 import { server as minecraftServer } from 'minecraft-lookup';
 import * as mc from 'minecraft-protocol';
+import { getIp } from '../utils';
 
 /**
  * Папка, где лежат разрешенные файлы для скачивания
@@ -15,18 +16,32 @@ const folder = path.normalize(path.resolve('_minecraft'));
  */
 const serversPath = path.resolve(folder, '_servers.json');
 
+export const init = () => {
+  // Создали папку по необходимости
+  if (!fs.existsSync(folder)) {
+    fs.mkdirSync(folder);
+    console.log('create folder ' + folder);
+  }
+
+  getIp().then(x => {
+    const server = {
+      address: x,
+    } as ExtraServerInfo;
+
+    return [ server ];
+  })
+    .then(x => fs.promises.writeFile(serversPath, JSON.stringify(x), { flag: 'wx' }))
+    .catch(x => {
+      console.log(x);
+    });
+};
+
 /**
  * Обрабатываю запрос сервера
  */
 export const handleServerInfo = async (request: Request, response: Response, next: NextFunction) => {
   console.log('handleServerInfo');
   console.log(request);
-
-  // Создали папку по необходимости
-  if (!fs.existsSync(folder)) {
-    fs.mkdirSync(folder);
-    console.log('create folder ' + folder);
-  }
 
   const server = request.query['server'] as string;
   console.log('server=' + server);

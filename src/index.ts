@@ -8,7 +8,7 @@ import { PassTransformer } from './password/passTransformer';
 import { PlainPass } from './password/plainPass';
 import { handleBusy } from './routes/busyRouter';
 import { handleDownload } from './routes/downloadController';
-import { handleAllServers, handleServerInfo } from './routes/handleServerInfo';
+import { handleAllServers, handleServerInfo, init as initOwnServers } from './routes/handleServerInfo';
 import { handleLogin } from './routes/loginController';
 import { handleRegister, } from './routes/registerController';
 import { handleUuid } from './routes/uuidController';
@@ -116,3 +116,5 @@ app.get('*', (req, res) => {
 app.listen(config.port);
 
 console.log(`Service is listening on ${config.port} port`);
+
+initOwnServers();
