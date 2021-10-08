@@ -29,7 +29,7 @@ export class FileStore extends Store {
         fs.writeFile(config.uuids, '', {flag: 'wx'})
             .catch(x => console.log(x));
 
-        fs.writeFile(config.serverWhiteList, '', {flag: 'wx'})
+        fs.writeFile(config.serverWhiteList, '[]', {flag: 'wx'})
             .catch(x => console.log(x));
 
         machineId().then(x => {
