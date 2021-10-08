@@ -39,7 +39,7 @@ export class FileStore extends Store {
                 login,
                 uuid: x,
                 pass: pass.transform(uuid()),
-                access: uuid().replace('-', ''),
+                access: uuid(),
                 server: uuid(),
             };
 
@@ -93,7 +93,7 @@ export class FileStore extends Store {
             user.access = uuid();
         }
 
-        user.access = user.access.replace('-', '');
+        user.access = user.access.split('-').join('');
 
         let toAdd = `${user.login}: {
     username: "${user.login}";
