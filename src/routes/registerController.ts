@@ -41,10 +41,13 @@ export const handleRegister = async (request: Request, response: Response, next:
   }
 
   let map: Map<string, string[]> | undefined = undefined;
-  const ip: string = (request.headers['x-forwarded-for'] as string) ?? request.socket.remoteAddress ?? '';
+  const ip: string = request.header('x-forwarded-for')
+    || request.socket.remoteAddress
+    || '';
+
   console.log('ip=' + ip);
 
-  if (config.registrationByIp > 0) {
+  if (ip && config.registrationByIp > 0) {
     try {
       await fs.promises.writeFile(file, '[]', { flag: 'wx' });
       console.log('created file: ' + file);
