@@ -102,7 +102,7 @@ export class FileStore extends Store {
 
         toAdd = `${id}: {
    username: "${user.login}";
-   accessToken: "${uuid()}";
+   accessToken: ${uuid()};
 };
 `;
         await fs.appendFile(this.config.uuids, toAdd, 'utf-8');
