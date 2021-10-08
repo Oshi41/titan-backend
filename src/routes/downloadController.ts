@@ -31,6 +31,8 @@ export const handleDownload = (request: Request, response: Response, next: NextF
 
     // файлы должны лежать в папке _download
     const filepath: string = path.normalize(path.resolve(folder, file));
+    console.log('filename: ' + filepath);
+
     if (!fs.existsSync(filepath)) {
         response.status(404)
             .send(`this file [${file}] is not existing`);

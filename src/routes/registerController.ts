@@ -49,6 +49,8 @@ export const handleRegister = (request: Request, response: Response, next: NextF
             response.status(500).send('Error during database injection');
         })
         .catch(x => {
+            console.log('error:');
+            console.log(x);
             response.status(403).send(x);
         })
 };
