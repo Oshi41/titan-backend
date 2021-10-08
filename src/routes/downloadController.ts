@@ -47,10 +47,5 @@ export const handleDownload = (request: Request, response: Response, next: NextF
     }
 
     const clientFileName: string = path.basename(filepath);
-
-    response.sendFile(filepath, {
-        headers: {
-            "Content-Disposition": `attachment; filename="${clientFileName}"`
-        }
-    });
+    response.download(filepath, clientFileName);
 }
