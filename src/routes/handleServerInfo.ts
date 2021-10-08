@@ -106,6 +106,7 @@ const fillForgeInfo = (host: string, port: number): Promise<ForgeInfo> => {
 
     // @ts-ignore
     if (!client.autoVersionHooks) {
+      // @ts-ignore
       client.autoVersionHooks = [];
     }
 
