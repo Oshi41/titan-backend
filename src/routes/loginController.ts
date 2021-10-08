@@ -1,6 +1,6 @@
-import {store as _store} from '../index';
-import {Request, Response} from "express";
-import {NextFunction} from "express-serve-static-core";
+import { store as _store } from '../index';
+import { Request, Response } from 'express';
+import { NextFunction } from 'express-serve-static-core';
 
 /**
  * ОБрабатываю вход в систему
@@ -9,30 +9,38 @@ import {NextFunction} from "express-serve-static-core";
  * @param next - middleware
  */
 export const handleLogin = (request: Request, response: Response, next: NextFunction) => {
-    let login = request.query['login'] as string;
-    if (!login) {
-        response.status(403)
-            .send('No login provided');
-        return;
-    }
+  console.log('handleLogin');
+  console.log(request);
 
-    let pass = request.query['pass'] as string;
-    if (!pass) {
-        response.status(403)
-            .send('No password provided');
-        return;
-    }
+  let login = request.query['login'] as string;
+  if (!login) {
+    console.log('No login provided');
+    return response.status(403)
+      .send('No login provided');
+  }
 
-    _store.check(login, pass)
-        .then(x => {
-            if (x.login !== login) {
-                throw new Error("Login or password or both are incorrect");
-            }
+  console.log('login=' + login);
 
-            response.send(`OK:${login}`);
-        })
-        .catch(x => {
-            console.log(x);
-            response.status(403).send(x.toString());
-        })
-}
+  let pass = request.query['pass'] as string;
+  if (!pass) {
+    console.log('No password provided');
+    return response.status(403)
+      .send('No password provided');
+  }
+
+  console.log('pass=' + pass);
+
+  _store.check(login, pass)
+    .then(x => {
+      if (x.login !== login) {
+        throw new Error('Login or password or both are incorrect');
+      }
+
+      console.log('log in completed');
+      response.send(`OK:${login}`);
+    })
+    .catch(x => {
+      console.log(x);
+      response.sendStatus(403);
+    });
+};

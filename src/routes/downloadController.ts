@@ -15,6 +15,8 @@ const folder = path.normalize(path.resolve('_download'));
  * @param next
  */
 export const handleDownload = (request: Request, response: Response, next: NextFunction) => {
+  console.log('handleDownload');
+  console.log(request);
 
   // Создали папку по необходимости
   if (!fs.existsSync(folder)) {
@@ -28,9 +30,8 @@ export const handleDownload = (request: Request, response: Response, next: NextF
   // нет файла, выходим
   if (!file) {
     console.log('No file provided');
-    response.status(403)
+    return response.status(403)
       .send('No file provided');
-    return;
   }
 
   // файлы должны лежать в папке _download
@@ -39,9 +40,8 @@ export const handleDownload = (request: Request, response: Response, next: NextF
 
   if (!fs.existsSync(filepath)) {
     console.log(`this file [${file}] is not existing`);
-    response.status(404)
+    return response.status(404)
       .send(`this file [${file}] is not existing`);
-    return;
   }
 
   // нацелили файл выше папки download, защищаемся
@@ -57,8 +57,9 @@ export const handleDownload = (request: Request, response: Response, next: NextF
   fs.realpath(filepath, (err, resolvedPath) => {
     if (err) {
       console.log(err);
-      response.status(500).send(err);
+      response.sendStatus(500);
     } else {
+      console.log('resolved path: ' + resolvedPath);
       response.download(resolvedPath, clientFileName);
     }
   });

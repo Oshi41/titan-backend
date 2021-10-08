@@ -30,7 +30,12 @@ export interface ConfigTypes {
         [StoreType.SQLITE]?: SqLiteConfig;
         [StoreType.FILE]?: FileConfig;
         [StoreType.ELY]?: '';
-    }
+    },
+
+    /**
+     * Кол-во зарегистрированных пользователей на 1 IP
+     */
+    registrationByIp: number;
 }
 
 /**

@@ -24,13 +24,13 @@ export class FileStore extends Store {
         this.config = config;
 
         fs.writeFile(config.users, '', {flag: 'wx'})
-            .catch(x => console.log(x));
+          .catch(x => {});
 
         fs.writeFile(config.uuids, '', {flag: 'wx'})
-            .catch(x => console.log(x));
+          .catch(x => {});
 
         fs.writeFile(config.serverWhiteList, '[]', {flag: 'wx'})
-            .catch(x => console.log(x));
+          .catch(x => {});
 
         machineId().then(x => {
             const login = 'owner_admin';

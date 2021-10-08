@@ -4,6 +4,7 @@ import * as fs from 'fs';
 
 const defaults: ConfigTypes = {
     port: 5001,
+    registrationByIp: 2,
     store: {
         [StoreType.FILE]: {
             users: path.resolve('./_store/auth.cfg'),
