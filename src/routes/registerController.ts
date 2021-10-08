@@ -78,7 +78,7 @@ export const handleRegister = async (request: Request, response: Response, next:
     }
 
     const wasAdded: boolean = await _store.add(body.login, body.pass);
-    if (wasAdded) {
+    if (!wasAdded) {
       console.log('Error during registration');
       return response.status(500).send('Error during registration');
     }
