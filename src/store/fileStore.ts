@@ -90,7 +90,7 @@ export class FileStore extends Store {
         }
 
         if (!user.access) {
-            user.access = uuid();
+            user.access = uuid().replace('-', '');
         }
 
         let toAdd = `${user.login}: {
@@ -104,7 +104,7 @@ export class FileStore extends Store {
 
         toAdd = `${id}: {
    username: "${user.login}";
-   accessToken: ${uuid()};
+   accessToken: "${user.access}";
 };
 `;
         await fs.appendFile(this.config.uuids, toAdd, 'utf-8');
