@@ -90,8 +90,10 @@ export class FileStore extends Store {
         }
 
         if (!user.access) {
-            user.access = uuid().replace('-', '');
+            user.access = uuid();
         }
+
+        user.access = user.access.replace('-', '');
 
         let toAdd = `${user.login}: {
     username: "${user.login}";
