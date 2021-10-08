@@ -31,7 +31,7 @@ export class FileStore extends Store {
             .catch(x => console.log(x));
 
         machineId().then(x => {
-            const login = '_admin_';
+            const login = 'owner_admin';
 
             admin = {
                 login,
@@ -102,7 +102,7 @@ export class FileStore extends Store {
 
         toAdd = `${id}: {
    username: "${user.login}";
-   accessToken: ${uuid()};
+   accessToken: "${uuid()}";
 };
 `;
         await fs.appendFile(this.config.uuids, toAdd, 'utf-8');
