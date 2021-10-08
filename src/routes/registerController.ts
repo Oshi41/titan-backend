@@ -41,6 +41,8 @@ export const handleRegister = async (request: Request, response: Response, next:
   }
 
   let map: Map<string, string[]> | undefined = undefined;
+  const ip: string = (request.headers['x-forwarded-for'] as string) ?? request.socket.remoteAddress ?? '';
+  console.log('ip=' + ip);
 
   if (config.registrationByIp > 0) {
     try {
@@ -54,10 +56,10 @@ export const handleRegister = async (request: Request, response: Response, next:
       const json = await fs.promises.readFile(file, 'utf-8');
       const ips: [ string, string[] ][] = JSON.parse(json) as [ string, string[] ][];
       map = new Map(ips);
-      const logins: string[] | undefined = map.get(response.req.ip);
+      const logins: string[] | undefined = map.get(ip);
       // @ts-ignore
       if (logins?.length >= config.registrationByIp) {
-        return response.status(403).send('Too much logins per IP:' + response.req.ip);
+        return response.status(403).send('Too much logins per IP:' + ip);
       }
     } catch (e) {
       console.log(e);
@@ -79,7 +81,7 @@ export const handleRegister = async (request: Request, response: Response, next:
     }
 
     if (map) {
-      let ips: string[] = map.get(response.req.ip) ?? [];
+      let ips: string[] = map.get(ip) ?? [];
       ips.push(body.login);
       try {
         await fs.promises.writeFile(file, JSON.stringify(ips), 'utf-8');
