@@ -16,6 +16,7 @@ const file = path.resolve('_store', 'ips.json');
 export const handleRegister = async (request: Request, response: Response, next: NextFunction) => {
   console.log('handle register');
   console.log(request);
+  console.log(response);
 
   let body = request.body as LoginRequest;
   if (!body) {
