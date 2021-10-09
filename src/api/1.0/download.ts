@@ -12,11 +12,11 @@ export const onDownload = async (request: Request, response: Response, next: Nex
     console.log('download');
 
     try {
-        if (!checkAndLog(request, ['name'])) {
+        if (!checkAndLog(request, ['file'])) {
             return;
         }
 
-        const file = path.normalize(path.resolve(DownloadFolder, request.query['name'] as string));
+        const file = path.normalize(path.resolve(DownloadFolder, request.query['file'] as string));
         if (!fs.existsSync(file)) {
             return response.sendStatus(404);
         }
