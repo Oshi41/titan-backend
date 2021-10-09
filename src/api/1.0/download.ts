@@ -22,7 +22,7 @@ export const onDownload = async (request: Request, response: Response, next: Nex
         }
 
         // файл где то снаружи
-        if (!DownloadFolder.includes(file)) {
+        if (!file.includes(DownloadFolder)) {
             console.log('trying to download outside the folder!')
             return response.sendStatus(403);
         }
