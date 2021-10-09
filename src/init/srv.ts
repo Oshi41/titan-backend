@@ -16,7 +16,7 @@ export const setServers = async () => {
     let file = path.resolve(MinecraftServersFolder, ip + '.json');
 
     if (await createPath(file)) {
-        await writeJSON(file, [{address: ip} as OwnServerInfo]);
+        await writeJSON(file, {address: ip} as OwnServerInfo);
     }
 
     file = path.resolve(MinecraftServersFolder, '../', '_mods.json');
