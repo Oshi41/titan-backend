@@ -4,6 +4,7 @@ import * as fs from "fs";
 import os from 'os';
 import {machineId} from 'node-machine-id';
 import path from "path";
+import {v4 as uuid} from 'uuid';
 
 /**
  * Возвращает текущий ip адрес
@@ -108,9 +109,23 @@ export const getIp = (request: Request) => {
 }
 
 /**
- * Формат обычного uuid
+ * Формат обычного uuid.
+ * Если передать undefined, сгенерируем рандомный uuid
  * @param s - hex string
  */
-export const fromHexString = (s: string): string => {
+export const fromHexString = (s: string | undefined): string => {
+    if (!s){
+        s = uuid();
+    }
+
+    // @ts-ignore
     return `${s.substr(0, 8)}-${s.substr(8, 4)}-${s.substr(8 + 4, 4)}-${s.substr(8 + 4 + 4, 4)}-${s.substr(8 + 4 + 4 + 4)}`;
+}
+
+/**
+ * Возвращает HEX string
+ * @param s
+ */
+export const toHexString = (s: string | undefined): string => {
+    return (s ?? uuid()).split('-').join('');
 }

@@ -21,6 +21,7 @@ export interface JoinResp {
 
 /**
  * Вызывается при подключении к серверу
+ * @see https://wiki.vg/Protocol_Encryption#Client
  */
 export const onJoin = async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -38,7 +39,9 @@ export const onJoin = async (request: Request, response: Response, next: NextFun
         body.accessToken = fromHexString(body.accessToken);
         body.selectedProfile = fromHexString(body.selectedProfile);
 
-        const users: User[] = await storage.find(['uuid', body.selectedProfile]);
+        const users: User[] = await storage.find(
+            ['uuid', body.selectedProfile],
+            ['access', body.accessToken]);
         if (users?.length !== 1) {
             return response.sendStatus(400);
         }

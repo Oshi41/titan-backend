@@ -1,3 +1,4 @@
+import {randomUUID} from "crypto";
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
 import {storage} from "../../../index";
@@ -67,7 +68,21 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
             return response.sendStatus(403);
         }
 
-        const user = users[0];
+        const user = {
+            ...users[0],
+            // генерирую рандомный токен
+            access: randomUUID()
+        } as User;
+
+        if (!await storage.update(user)) {
+            console.log("Can't update from user:");
+            console.log(users[0]);
+            console.log("to user:");
+            console.log(user);
+
+            return response.sendStatus(500);
+        }
+
         const jsonResp: AuthResponse = {
             selectedProfile: {
                 id: user.uuid.split('-').join(''),
