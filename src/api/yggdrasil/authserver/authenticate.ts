@@ -88,8 +88,8 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
                 id: user.uuid.split('-').join(''),
                 name: user.login,
             },
-            accessToken: user.server ?? '',
-            clientToken: user.access.split('-').join(''),
+            accessToken: user.access.split('-').join(''),
+            clientToken: body.clientToken,
         };
 
         return response.json(jsonResp);
