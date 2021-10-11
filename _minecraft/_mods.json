@@ -54,5 +54,133 @@
   {
     "modid": "aquaticabyss",
     "page": "https://www.curseforge.com/minecraft/mc-mods/aquatic-abyss"
+  },
+  {
+    "modid": "ClientFixer",
+    "page": "https://minecraft.fandom.com/ru/wiki/ClientFixer"
+  },
+  {
+    "modid": "Treecapitator",
+    "page": "https://minecraft.fandom.com/ru/wiki/TreeCapitator"
+  },
+  {
+    "modid": "Avaritia",
+    "page": "https://minecraft.fandom.com/ru/wiki/Avaritia"
+  },
+  {
+    "modid": "avaritiaddons",
+    "page": "https://www.curseforge.com/minecraft/mc-mods/avaritiaddons"
+  },
+  {
+    "modid": "betterbuilderswands",
+    "page": "https://ftbwiki.org/Better_Builder%27s_Wands"
+  },
+  {
+    "modid": "divinerpg",
+    "page": "https://minecraft.fandom.com/ru/wiki/Divine_RPG"
+  },
+  {
+    "modid": "ThermalExpansion",
+    "page": "https://minecraft.fandom.com/ru/wiki/Thermal_Expansion"
+  },
+  {
+    "modid": "DraconicEvolution",
+    "page": "https://minecraft.fandom.com/ru/wiki/Draconic_Evolution"
+  },
+  {
+    "modid": "Forestry",
+    "page": "https://minecraft.fandom.com/ru/wiki/Forestry"
+  },
+  {
+    "modid": "ImmersiveEngineering",
+    "page": "https://minecraft.fandom.com/ru/wiki/Immersive_Engineering"
+  },
+  {
+    "modid": "ForgeMultipart",
+    "page": "https://ftb.fandom.com/wiki/Forge_Multipart"
+  },
+  {
+    "modid": "ExtraUtilities",
+    "page": "https://ftbwiki.org/Extra_Utilities"
+  },
+  {
+    "modid": "MineFactoryReloaded",
+    "page": "https://minecraft.fandom.com/ru/wiki/MineFactory_Reloaded"
+  },
+  {
+    "modid": "TConstruct",
+    "page": "https://minecraft.fandom.com/ru/wiki/Tinkers%27_Construct"
+  },
+  {
+    "modid": "MagicBees",
+    "page": "https://ftb.fandom.com/wiki/Magic_Bees"
+  }
+  {
+    "modid": "EnderIO",
+    "page": "https://minecraft.fandom.com/ru/wiki/Ender_IO"
+  },
+  {
+    "modid": "EnderTech",
+    "page": "https://ftb.fandom.com/wiki/EnderTech"
+  },
+  {
+    "modid": "foamfix",
+    "page": ""
+  },
+  {
+    "modid": "FTBU",
+    "page": "https://feedthebeast.notion.site/FTB-Mod-Documentation-da2e359bad2449459d58d787edda3168"
+  },
+  {
+    "modid": "Project_Alchemy",
+    "page": "https://www.curseforge.com/minecraft/mc-mods/fullthrottle-alchemist"
+  },
+  {
+    "modid": "gendustry",
+    "page": "https://minecraft.fandom.com/ru/wiki/Gendustry"
+  },
+  {
+    "modid": "journeymap",
+    "page": "https://minecraft.fandom.com/ru/wiki/JourneyMap"
+  },
+  {
+    "modid": "mo",
+    "page": "https://ftb.fandom.com/wiki/Matter_Overdrive"
+  },
+  {
+    "modid": "Mekanism",
+    "page": "https://minecraft.fandom.com/ru/wiki/Mekanism"
+  },
+  {
+    "modid": "Metallurgy",
+    "page": "https://minecraft.fandom.com/ru/wiki/Metallurgy"
+  },
+  {
+    "modid": "TwilightForest",
+    "page": "https://minecraft.fandom.com/ru/wiki/Twilight_Forest"
+  },
+  {
+    "modid": "Morph",
+    "page": "https://minecraft.fandom.com/ru/wiki/Morph"
+  },
+  {
+    "modid": "OreSpawn",
+    "page": "https://minecraft.fandom.com/ru/wiki/OreSpawn"
+  },
+  {
+    "modid": "ProjectE",
+    "page": "https://ftb.fandom.com/wiki/ProjectE"
+  },
+  {
+    "modid": "RotaryCraft",
+    "page": "https://rotarycraft.fandom.com/wiki/RotaryCraft_Wiki"
+  },
+  {
+    "modid": "StorageDrawers",
+    "page": "https://ftb.fandom.com/wiki/Storage_Drawers"
+  },
+  {
+    "modid": "ForgeMicroblock",
+    "page": "https://ftbwiki.org/Microblock"
   }
 ]
