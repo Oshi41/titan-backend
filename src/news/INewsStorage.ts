@@ -26,7 +26,12 @@ export type QueryMeta = {
   /**
    * Сортировка по полям
    */
-  orderBy?: string[],
+  orderBy?: [ string, 'acs' | 'desc' ][],
+
+  /**
+   * Должно быть валидной SQL инструкцией
+   */
+  filters?: string;
 };
 
 export type NewsResp = {
@@ -55,7 +60,7 @@ export interface INewsStorage extends IPassEncrypt {
    * @returns {Promise<number>}
    * @param q
    */
-  put(q: QueryMeta): Promise<number>;
+  put(q: QueryMeta): Promise<NewsItem>;
 
   /**
    * Обновляю текущую новость

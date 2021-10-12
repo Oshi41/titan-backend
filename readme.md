@@ -25,6 +25,19 @@ https://github.com/yushijinhun/authlib-injector
 }
 ~~~~
 
+### Генерация сертификата
+https://stackoverflow.com/questions/11744975/enabling-https-on-express-js
+
+Для работы на https необходим сертификат. Для этого откройте терминал,
+перейдите в корень и запустите:
+
+~~~~
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./_storage/selfsigned.key -out ./_storage/selfsigned.crt
+~~~~
+
+Далее следуйте инструкции
+
+
 # Endpoint /yggdrasil
 
 ### authserver/authenticate

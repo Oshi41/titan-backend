@@ -1,8 +1,8 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
 import {storage} from "../../../index";
-import {checkAndLog} from "../../../log/index";
-import {User} from "../../../types/index";
+import {checkAndLog} from '../../../log';
+import {User} from '../../../types';
 import {JoinResp} from "./join";
 
 /**

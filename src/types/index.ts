@@ -135,9 +135,9 @@ export interface ModInfo {
  */
 export interface NewsItem {
   /**
-   * ID новости
+   * uuid новости
    */
-  id: number;
+  id: string;
 
   /**
    * Автор новости
@@ -162,7 +162,7 @@ export interface NewsItem {
   /**
    * изображение
    */
-  imageBase64: string;
+  image: Blob;
 }
 
 /**
@@ -171,4 +171,12 @@ export interface NewsItem {
 export interface Manager {
   user: User;
   roles: string[];
+}
+
+/**
+ * Возможные типы данных
+ */
+export enum Roles {
+  Moderator = 'moderator',
+  Comment = 'comment',
 }
