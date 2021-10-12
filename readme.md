@@ -33,6 +33,7 @@ https://stackoverflow.com/questions/11744975/enabling-https-on-express-js
 
 ~~~~
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./_storage/ssl/selfsigned.key -out ./_storage/ssl/selfsigned.cert
+sudo openssl x509 -pubkey -in ./_storage/ssl/selfsigned.cert -out ./_storage/ssl/selfsigned.public.key
 ~~~~
 
 Далее следуйте инструкции
