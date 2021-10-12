@@ -89,7 +89,8 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
                 name: user.login,
             },
             accessToken: user.access.split('-').join(''),
-            clientToken: body.clientToken,
+            // т.к. токен может и не прийти!
+            clientToken: user.access.split('-').join(''),
         };
 
         return response.json(jsonResp);

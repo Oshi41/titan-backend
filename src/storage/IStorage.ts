@@ -1,10 +1,11 @@
 import {IPassTransformer} from "../transform/IPassTransformer";
 import {User} from "../types/index";
+import { IPassEncrypt } from './IPassEncrypt';
 
 /**
  * Абстрактоное хранилище
  */
-export abstract class IStorage {
+export abstract class IStorage implements IPassEncrypt{
     private readonly _pass: IPassTransformer;
     protected _admin: User = {
         login: '',

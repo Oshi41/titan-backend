@@ -9,7 +9,7 @@ import {initLog} from "./init/log";
 import {getPass} from "./init/pass";
 import {setServers} from "./init/srv";
 import {IStorage} from "./storage/IStorage";
-import {Sqlite} from "./storage/sqlite";
+import {UsersSql} from "./storage/usersSql";
 import {BackendConfig} from "./types/index";
 
 const cors = require('cors');
@@ -25,7 +25,7 @@ const onStartUp = async () => {
 
     config = await readCfg();
     await setServers();
-    storage = new Sqlite(getPass(config.passEncrypt));
+    storage = new UsersSql(getPass(config.passEncrypt));
     await checkDownloadFolder();
 
     app = express();
