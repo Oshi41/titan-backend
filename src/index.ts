@@ -12,6 +12,7 @@ import { IStorage } from './storage/IStorage';
 import { UsersSql } from './storage/usersSql';
 import { BackendConfig } from './types';
 import * as https from 'https';
+import * as http from 'http';
 import * as fs from 'fs';
 import { Server } from 'https';
 
@@ -53,6 +54,7 @@ const onStartUp = async () => {
     cert: fs.readFileSync(path.resolve('_storage', 'ssl', 'selfsigned.cert')),
   }, app);
 
+  http.createServer(app).listen(8080);
   server.listen(config.port, () => {
     console.log('server is listening on port:' + config.port);
   });
