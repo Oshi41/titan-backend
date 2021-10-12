@@ -8,12 +8,12 @@ import { IPassEncrypt } from './IPassEncrypt';
 export abstract class IStorage implements IPassEncrypt{
     private readonly _pass: IPassTransformer;
     protected _admin: User = {
-        login: '',
+        login: 'admin_owner',
         pass: '',
-        uuid: '',
-        access: '',
-        server: '',
-        ip: '',
+        uuid: '11111111-2222-3333-4444-555555555555',
+        ip: '127.0.0.1',
+        access: '123123',
+        server: 'server',
     };
 
     protected constructor(pass: IPassTransformer) {
