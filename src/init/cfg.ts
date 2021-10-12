@@ -12,7 +12,8 @@ const file = path.resolve('_storage', 'config.json');
  */
 const defaults = {
   passEncrypt: Digest.MD5,
-  port: 443,
+  https: 443,
+  http: 80,
   maxUsersPerIP: 3,
 } as BackendConfig;
 

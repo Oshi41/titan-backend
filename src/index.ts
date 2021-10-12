@@ -54,9 +54,9 @@ const onStartUp = async () => {
     cert: fs.readFileSync(path.resolve('_storage', 'ssl', 'selfsigned.cert')),
   }, app);
 
-  http.createServer(app).listen(8080);
-  server.listen(config.port, () => {
-    console.log('server is listening on port:' + config.port);
+  http.createServer(app).listen(config.http);
+  server.listen(config.https, () => {
+    console.log('server is listening on port:' + config.http);
   });
 };
 

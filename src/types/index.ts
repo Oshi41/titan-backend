@@ -51,9 +51,14 @@ export interface BackendConfig {
   passEncrypt: Digest;
 
   /**
-   * Порт
+   * Порт http
    */
-  port: number;
+  http: number;
+
+  /**
+   * Порт https
+   */
+  https: number;
 
   /**
    * Максимальное кол-во учёток под одним IP адресом
