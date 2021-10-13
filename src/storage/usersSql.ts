@@ -73,9 +73,17 @@ export class UsersSql extends IStorage implements ISqlite {
         } else {
           getUniqueMachineId()
             .then(x => {
-              console.log(`machine id: ${x}, encrypted is: ${this.encrypt(x)}`);
+              console.log(`machine id: ${x}`);
               this.admin().pass = this.encrypt(x);
-            })
+
+              this.find(['login', this.admin().login], ['pass', this.admin().pass])
+                .then(x => {
+                  if (x.length === 0) {
+                    this.update(this.admin())
+                      .then(x => console.log(`Changed admin: ${x}`))
+                  }
+                })
+            });
         }
       });
   }
