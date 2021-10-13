@@ -4,7 +4,7 @@ import * as fs from "fs";
 import {server as minecraftServer} from "minecraft-lookup";
 import * as mc from "minecraft-protocol";
 import path from "path";
-import {storage} from "../../index";
+import {usersStorage} from "../../index";
 import {checkAndLog} from "../../log/index";
 import {MinecraftServersFolder} from '../../init/srv';
 import {ForgeInfo, ModInfo, OwnServerInfo, ServerInfo} from "../../types/index";
@@ -77,7 +77,7 @@ const fillForgeInfo = (host: string, port: number): Promise<ForgeInfo> => {
         const client = mc.createClient({
             port,
             host,
-            username: storage.admin().login
+            username: usersStorage.admin().login
         });
 
         // @ts-ignore

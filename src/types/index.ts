@@ -171,11 +171,36 @@ export interface NewsItem {
 }
 
 /**
- * Учетка для управления
+ * Токен пользователя
  */
-export interface Manager {
-  user: User;
-  roles: string[];
+export interface WebToken {
+  /**
+   * Поле из Users
+   */
+  login: string;
+
+  /**
+   * Поле из Users
+   */
+  id: string;
+
+  /**
+   * Тип аутентификации юзера
+   */
+  auth: UserAuthType;
+
+  /**
+   * Список ролей
+   */
+  roles: Roles[];
+}
+
+/**
+ * Тип аутентифицированного клиента
+ */
+export enum UserAuthType {
+  Own = 'own',
+  ElyBy = 'elyby',
 }
 
 /**

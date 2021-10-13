@@ -1,25 +1,39 @@
 import bodyParser from 'body-parser';
-import express, { Application } from 'express';
+import {randomUUID} from "crypto";
+import express, {Application} from 'express';
 import path from 'path';
-import { getApiRouter } from './api/1.0';
-import { getYggdrasilRouter } from './api/yggdrasil';
-import { readCfg } from './init/cfg';
-import { checkDownloadFolder } from './init/download';
-import { initLog } from './init/log';
-import { getPass } from './init/pass';
-import { setServers } from './init/srv';
-import { IStorage } from './storage/IStorage';
-import { UsersSql } from './storage/usersSql';
-import { BackendConfig } from './types';
+import {getApiRouter} from './api/1.0';
+import {getYggdrasilRouter} from './api/yggdrasil';
+import {readCfg} from './init/cfg';
+import {checkDownloadFolder} from './init/download';
+import {initLog} from './init/log';
+import {getPass} from './init/pass';
+import {setServers} from './init/srv';
+import {IStorage} from './storage/IStorage';
+import {UsersSql} from './storage/usersSql';
+import {BackendConfig} from './types';
 import * as https from 'https';
 import * as http from 'http';
 import * as fs from 'fs';
-import { Server } from 'https';
+import {Server} from 'https';
+import * as jwt from 'express-jwt';
 
 const cors = require('cors');
 
+/**
+ * Конфиг приложения
+ */
 export let config: BackendConfig;
-export let storage: IStorage;
+
+/**
+ * Хранилище пользователей
+ */
+export let usersStorage: IStorage;
+
+/**
+ * Секрет для JWT
+ */
+export const clientSecret = randomUUID();
 
 let app: Application;
 
@@ -29,14 +43,14 @@ const onStartUp = async () => {
 
   config = await readCfg();
   await setServers();
-  storage = new UsersSql(getPass(config.passEncrypt));
+  usersStorage = new UsersSql(getPass(config.passEncrypt));
   await checkDownloadFolder();
 
   app = express();
-  const { url: apiUrl, router: apiRouter } = getApiRouter();
+  const {url: apiUrl, router: apiRouter} = getApiRouter();
   app.use(apiUrl, apiRouter);
 
-  const { url: yggUrl, router: yggRouter } = getYggdrasilRouter();
+  const {url: yggUrl, router: yggRouter} = getYggdrasilRouter();
   app.use(yggUrl, yggRouter);
 
   app.use(cors());
@@ -54,9 +68,10 @@ const onStartUp = async () => {
     cert: fs.readFileSync(path.resolve('_storage', 'ssl', 'selfsigned.cert')),
   }, app);
 
-  http.createServer(app).listen(config.http, () => {
-    console.log('http is listening on port:' + config.http);
-  });
+  http.createServer(app)
+    .listen(config.http, () => {
+      console.log('http is listening on port:' + config.http);
+    });
 
   server.listen(config.https, () => {
     console.log('https is listening on port:' + config.https);

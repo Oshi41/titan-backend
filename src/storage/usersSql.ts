@@ -21,12 +21,7 @@ export class UsersSql extends IStorage implements ISqlite {
 
     createPath(file)
       .then(value => {
-        if (value === false) {
-          console.log('cannot create db file:' + file);
-          throw new Error('cannot create db file:' + file);
-        }
-
-        this._db = sqlite.cached.Database(file);
+        this._db = new Database(file);
 
         if (value) {
           this.getDb()
@@ -67,10 +62,9 @@ export class UsersSql extends IStorage implements ISqlite {
 
                     getUniqueMachineId()
                       .then(x => {
-
-                        console.log('!!!!!!!!!!!!!!!!!!unique machine ID is:' + x + '!!!!!!!!!!!!!!!!!!!!!!!!');
-
-                        this.admin().pass = this.encrypt(x);
+                        console.log('machine ID:' + x);
+                        // внутри add идет изменение пароля на шифрованный
+                        this.admin().pass = x;
                         this.add(this.admin());
                       });
                   }
@@ -78,6 +72,10 @@ export class UsersSql extends IStorage implements ISqlite {
             });
         } else {
           getUniqueMachineId()
+            .then(x => {
+              console.log('machine id: ' + x);
+              this.admin().pass = this.encrypt(x);
+            })
         }
       });
   }

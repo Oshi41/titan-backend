@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
-import {storage} from "../../index";
+import {usersStorage} from "../../index";
 import {checkAndLog} from "../../log/index";
 import {User} from "../../types/index";
 
@@ -13,7 +13,7 @@ export const onBusy = async (request: Request, response: Response, next: NextFun
             return;
         }
 
-        const users: User[] = await storage.find(['login', request.query['login']]);
+        const users: User[] = await usersStorage.find(['login', request.query['login']]);
         return response.status(200).send(users?.length > 0 ? 'busy' : 'free');
     } catch (e) {
         console.log(e);

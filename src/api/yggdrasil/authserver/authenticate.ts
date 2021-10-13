@@ -1,7 +1,7 @@
 import {randomUUID} from "crypto";
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
-import {storage} from "../../../index";
+import {usersStorage} from "../../../index";
 import {checkAndLog} from "../../../log/index";
 import {User} from "../../../types/index";
 import {JoinResp} from "../sessionserver/join";
@@ -63,7 +63,7 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
             return response.sendStatus(400);
         }
 
-        const users: User[] = await storage.find(['login', body.username], ['pass', storage.encrypt(body.password)]);
+        const users: User[] = await usersStorage.find(['login', body.username], ['pass', usersStorage.encrypt(body.password)]);
         if (users?.length !== 1) {
             return response.sendStatus(403);
         }
@@ -74,7 +74,7 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
             access: randomUUID()
         } as User;
 
-        if (!await storage.update(user)) {
+        if (!await usersStorage.update(user)) {
             console.log("Can't update from user:");
             console.log(users[0]);
             console.log("to user:");

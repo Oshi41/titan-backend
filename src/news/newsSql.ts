@@ -30,11 +30,6 @@ export class NewsSql implements INewsStorage, ISqlite {
     this._transform = transform;
 
     createPath(file).then(x => {
-      if (x === false) {
-        console.log('cannot create news db!');
-        throw new Error('cannot create news db!');
-      }
-
       this._db = sqlite.cached.Database(file, err => {
         if (err) {
           console.log(err);

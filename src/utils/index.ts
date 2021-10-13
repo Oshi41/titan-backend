@@ -1,10 +1,10 @@
 import dns from 'dns';
-import { Request } from 'express';
+import {Request} from 'express';
 import * as fs from 'fs';
 import os from 'os';
-import { machineId } from 'node-machine-id';
+import {machineId} from 'node-machine-id';
 import path from 'path';
-import { v4 as uuid } from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 /**
  * Возвращает текущий ip адрес
@@ -32,7 +32,7 @@ export const getUniqueMachineId = (): Promise<string> => {
  * @param file - путь к папке/файлу
  * @param isFolder - путь - папка?
  */
-export const createPath = async (file: string, isFolder = false): Promise<boolean | undefined> => {
+export const createPath = async (file: string, isFolder = false): Promise<boolean> => {
   try {
     // нормализовали путь
     file = path.normalize(file);
@@ -52,13 +52,13 @@ export const createPath = async (file: string, isFolder = false): Promise<boolea
         console.log('created file: ' + file);
       }
 
-      return true;
+      return Promise.resolve(true);
     }
 
-    return false;
+    return Promise.resolve(false);
   } catch (e) {
     console.log(e);
-    return undefined;
+    throw e;
   }
 };
 
@@ -127,14 +127,15 @@ export const fromHexString = (s: string | undefined): string => {
  * @param s
  */
 export const toHexString = (s: string | undefined): string => {
-  return (s ?? uuid()).split('-').join('');
+  return (s ?? uuid()).split('-')
+    .join('');
 };
 
 /**
  * Доступные операнды для sql
  * @type {string[]}
  */
-const operands = [ ',', 'or', 'and', '=', '<', '>', '+', '-', '!', 'between', 'like', 'not', 'in', '(', ')' ];
+const operands = [',', 'or', 'and', '=', '<', '>', '+', '-', '!', 'between', 'like', 'not', 'in', '(', ')'];
 
 /**
  * Проверяем безопасна ли SQL строка
@@ -165,8 +166,10 @@ export const checkSqlString = (sql: string, fieldKeys: string[]): boolean => {
  * @returns {string}
  */
 const removeAll = (source: string, patterns: string[]): string => {
-  for (let pattern of patterns) {
-    source = source.split(pattern).join('');
+  for (let pattern of
+    patterns) {
+    source = source.split(pattern)
+      .join('');
   }
   return source;
 };

@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
-import {storage} from "../../../index";
+import {usersStorage} from "../../../index";
 import {checkAndLog} from '../../../log';
 import {User} from '../../../types';
 import {JoinResp} from "./join";
@@ -18,7 +18,7 @@ export const hasJoined = async (request: Request, response: Response, next: Next
         const server = request.query['serverId'] as string;
         const login = request.query['username'] as string;
 
-        const users: User[] = await storage.find(['server', server], ['login', login]);
+        const users: User[] = await usersStorage.find(['server', server], ['login', login]);
         if (users?.length !== 1) {
             return response.sendStatus(204);
         }

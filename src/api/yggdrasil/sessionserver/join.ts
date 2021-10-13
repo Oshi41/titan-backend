@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { NextFunction } from 'express-serve-static-core';
-import { storage } from '../../../index';
+import { usersStorage } from '../../../index';
 import { checkAndLog } from '../../../log';
 import { User } from '../../../types';
 import { fromHexString } from '../../../utils';
@@ -39,7 +39,7 @@ export const onJoin = async (request: Request, response: Response, next: NextFun
     body.accessToken = fromHexString(body.accessToken);
     body.selectedProfile = fromHexString(body.selectedProfile);
 
-    const users: User[] = await storage.find(
+    const users: User[] = await usersStorage.find(
       [ 'uuid', body.selectedProfile ],
       [ 'access', body.accessToken ]);
     if (users?.length !== 1) {
@@ -52,7 +52,7 @@ export const onJoin = async (request: Request, response: Response, next: NextFun
       access: body.accessToken,
     } as User;
 
-    if (!await storage.update(original)) {
+    if (!await usersStorage.update(original)) {
       return response.sendStatus(403);
     }
 
