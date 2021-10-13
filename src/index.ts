@@ -9,6 +9,7 @@ import {checkDownloadFolder} from './init/download';
 import {initLog} from './init/log';
 import {getPass} from './init/pass';
 import {setServers} from './init/srv';
+import {ISqlite} from "./storage/ISqlite";
 import {IStorage} from './storage/IStorage';
 import {UsersSql} from './storage/usersSql';
 import {BackendConfig} from './types';
@@ -28,7 +29,7 @@ export let config: BackendConfig;
 /**
  * Хранилище пользователей
  */
-export let usersStorage: IStorage;
+export let usersStorage: IStorage & ISqlite;
 
 /**
  * Секрет для JWT

@@ -41,11 +41,11 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
  * @param tokenCheck
  */
 export const onCheckAuth = (tokenCheck: (t: WebToken) => boolean) => async (request: Request, response: Response, next: NextFunction) => {
-  const token = request.body.token
-    || request.query.token
-    || request.headers["x-access-token"]
-    || request.headers["Authorization"]
-    || request.cookies['access_token'];
+  const token = request?.headers?.authorization as string;
+  // || request?.query?.token
+  // || request?.headers["x-access-token"]
+  // ||
+  // || request?.cookies['access_token'];
 
   try {
     if (!token) {
@@ -53,7 +53,7 @@ export const onCheckAuth = (tokenCheck: (t: WebToken) => boolean) => async (requ
       throw new Error('no token provided');
     }
 
-    const decoded = verify(token, clientSecret, {
+    const decoded = verify(token.replace('Bearer ', ''), clientSecret, {
       algorithms: ['HS256']
     }) as WebToken;
 
