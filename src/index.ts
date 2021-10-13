@@ -46,14 +46,19 @@ const onStartUp = async () => {
   usersStorage = new UsersSql(getPass(config.passEncrypt));
   await checkDownloadFolder();
 
+  const corsOts = {
+    origin: '*',
+    // Allow follow-up middleware to override this CORS for options
+    preflightContinue: true,
+    exposedHeaders: ['Authorization']
+  };
+
   app = express();
   const {url: apiUrl, router: apiRouter} = getApiRouter();
-  app.use(apiUrl, apiRouter);
+  app.use(apiUrl, cors(corsOts), apiRouter);
 
   const {url: yggUrl, router: yggRouter} = getYggdrasilRouter();
-  app.use(yggUrl, yggRouter);
-
-  app.use(cors());
+  app.use(yggUrl, cors(corsOts), yggRouter);
 
   app.use(bodyParser.json());
 
