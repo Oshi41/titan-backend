@@ -33,7 +33,7 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
   return response
     .header('Authorization', 'Bearer ' + signed)
     .status(200)
-    .json(token);
+    .send('Bearer ' + signed);
 }
 
 /**
