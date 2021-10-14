@@ -5,9 +5,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "test": "ts-node ./src/tests.ts",
-    "start:dev": "nodemon ./src/index.ts NODE_ENV=production",
-    "start": "ts-node --transpile-only ./src/index.ts NODE_ENV=production",
-    "setup": "ts-node ./setup.ts --sashok \"C:\\Users\\oshi4\\OneDrive\\Документы\\titan\" --front \"1\" --back \"2\""
+    "start:dev": "set NODE_ENV=development && nodemon ./src/index.ts",
+    "start": "set NODE_ENV=production && ts-node --transpile-only ./src/index.ts "
   },
   "keywords": [],
   "author": "",

@@ -14,16 +14,22 @@ const allKeys = Object.keys({
   server: ''
 } as User);
 
+interface UsersResp {
+  items: User[],
+  count: number
+}
+
 export const onRequestUsers = async (request: Request, response: Response, next: NextFunction) => {
   try {
+    console.log('onRequestUsers');
+
     if (!checkAndLog(request)) {
       return;
     }
 
     const filter = (request.query['filter'] as string) ?? '';
-    const sort = (request.query['sort'] as string) ?? '';
     const page = parseInt((request.query['page'] as string) ?? '0');
-    const size = parseInt((request.query['size'] as string) ?? '10');
+    const pageSize = parseInt((request.query['size'] as string) ?? '0');
 
     if (filter && !checkSqlString(filter, allKeys)) {
       console.log('wrong sql query');
@@ -31,23 +37,24 @@ export const onRequestUsers = async (request: Request, response: Response, next:
       return response.sendStatus(403);
     }
 
-    let sql = 'select * from users';
-    if (filter) {
-      sql += ' where ' + filter;
-    }
-
-    if (page >= 0 && size > 0) {
-      sql += ` limit ${size} offset ${size * page}`;
-    }
-
     usersStorage.getDb()
-      .all(sql, (err: Error | null, rows: User[]) => {
+      .all(`select *
+            from users ${filter}`, (err: Error | null, rows: User[]) => {
         if (err) {
           console.log(err.message);
           return response.sendStatus(500);
         }
 
-        return response.json(rows);
+        let result = rows;
+
+        if (page >= 0 && pageSize > 0) {
+          result = rows.slice(pageSize * page, pageSize * (page + 1));
+        }
+
+        return response.json({
+          items: result,
+          count: rows.length
+        } as UsersResp);
       });
 
 

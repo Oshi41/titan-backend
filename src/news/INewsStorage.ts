@@ -24,11 +24,6 @@ export type QueryMeta = {
   size?: number;
 
   /**
-   * Сортировка по полям
-   */
-  orderBy?: [ string, 'acs' | 'desc' ][],
-
-  /**
    * Должно быть валидной SQL инструкцией
    */
   filters?: string;

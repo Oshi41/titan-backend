@@ -9,6 +9,8 @@ import {checkDownloadFolder} from './init/download';
 import {initLog} from './init/log';
 import {getPass} from './init/pass';
 import {setServers} from './init/srv';
+import {INewsStorage} from "./news/INewsStorage";
+import {NewsSql} from "./news/newsSql";
 import {ISqlite} from "./storage/ISqlite";
 import {IStorage} from './storage/IStorage';
 import {UsersSql} from './storage/usersSql';
@@ -31,10 +33,14 @@ export let config: BackendConfig;
  */
 export let usersStorage: IStorage & ISqlite;
 
+export let newsStorage: INewsStorage & ISqlite;
+
 /**
  * Секрет для JWT
  */
-export const clientSecret = randomUUID();
+export const clientSecret = process.env.NODE_ENV === 'production'
+  ? randomUUID()
+  : '12345';
 
 let app: Application;
 
@@ -45,6 +51,7 @@ const onStartUp = async () => {
   config = await readCfg();
   await setServers();
   usersStorage = new UsersSql(getPass(config.passEncrypt));
+  newsStorage = new NewsSql(getPass(config.passEncrypt));
   await checkDownloadFolder();
 
   const corsOts = {

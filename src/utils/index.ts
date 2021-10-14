@@ -132,10 +132,14 @@ export const toHexString = (s: string | undefined): string => {
 };
 
 /**
- * Доступные операнды для sql
+ * Доступные операнды для запроса и сортировки sql
  * @type {string[]}
  */
-const operands = [',', 'or', 'and', '=', '<', '>', '+', '-', '!', 'between', 'like', 'not', 'in', '(', ')'];
+const operands = [',', 'or', 'and', '=', '<', '>', '+', '-', '!',
+  'between', 'like', 'not', 'in', '(', ')',
+  'order by', 'limit', 'offset', 'desc', 'asc', 'where', 'date(', 'datetime(']
+  // Сначала самые длинные!
+  .sort((a, b) => b.length - a.length);
 
 /**
  * Проверяем безопасна ли SQL строка
@@ -148,13 +152,16 @@ export const checkSqlString = (sql: string, fieldKeys: string[]): boolean => {
   sql = ` ${sql.toLowerCase()} `;
 
   // Вырезал все возможные поля. Они через пробел идут!
-  sql = removeAll(sql, fieldKeys.map(x => ` ${x} `));
+  sql = removeAll(sql, fieldKeys.map(x => ` ${x} `), ' ');
 
   // убрал все значения для полей (обязательно в кавычках)
-  sql = sql.replace('s/\\\'[^)]*\\\'//', '');
+  sql = sql.replace(/'(.*?)'/g, '');
 
   // убрал операнды
   sql = removeAll(sql, operands);
+
+  // Убираю все числа
+  sql = removeAll(sql, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(x => x + ''));
 
   return !removeAll(sql, [' ']);
 };
@@ -163,13 +170,14 @@ export const checkSqlString = (sql: string, fieldKeys: string[]): boolean => {
  * Удаляю все вхождения этой строки
  * @param {string} source - строка-источник
  * @param {string[]} patterns - список строк, которые вырезаем
+ * @param replace - на что заменяем
  * @returns {string}
  */
-const removeAll = (source: string, patterns: string[]): string => {
+const removeAll = (source: string, patterns: string[], replace = ''): string => {
   for (let pattern of
     patterns) {
     source = source.split(pattern)
-      .join('');
+      .join(replace);
   }
   return source;
 };

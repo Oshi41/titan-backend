@@ -81,6 +81,7 @@ export class UsersSql extends IStorage implements ISqlite {
                   if (x.length === 0) {
                     this.update(this.admin())
                       .then(x => console.log(`Changed admin: ${x}`))
+                      .catch(x => console.log(x));
                   }
                 })
             });
