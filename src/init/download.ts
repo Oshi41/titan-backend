@@ -5,6 +5,6 @@ export const DownloadFolder: string = path.resolve('_download');
 const reportsFolder: string = path.resolve('_storage', 'crash reports');
 
 export const checkDownloadFolder = async () => {
-    await createPath(DownloadFolder);
-    await createPath(reportsFolder);
+  await createPath(DownloadFolder, true);
+  await createPath(reportsFolder, true);
 }
