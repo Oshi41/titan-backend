@@ -5,7 +5,7 @@ import {Roles} from "../../types/index";
 import {onAddNews} from "./add_news";
 import {onAuth, onCheckAuth} from "./auth";
 import {onBusy} from "./busy";
-import {downloadMulter, onCrashPost} from "./crash_file";
+import {downloadMulter} from "./crash_file";
 import {onDeleteNews} from "./delete_news";
 import {onDownload} from "./download";
 import {onGetNews} from "./get_news";
@@ -45,7 +45,7 @@ export const getApiRouter = (): { url: string, router: core.Router } => {
     downloadMulter.any(),
     onCheckAuth(t => t?.login != null),
     downloadMulter.single('file'),
-    onCrashPost);
+    (req, res) => res.sendStatus(200));
 
 
   return {url: '/api/1.0', router: apiRouter};

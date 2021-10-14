@@ -135,18 +135,3 @@ export const downloadMulter = multer.default({
     },
   ),
 });
-
-export const onCrashPost = async (request: Request, response: Response, next: NextFunction) => {
-  const file: Express.Multer.File | undefined = request.file;
-  if (!file) {
-    return response.sendStatus(500);
-  }
-
-  const comment = request.body.comment as string;
-  if (!comment) {
-    console.log('no comment provided');
-    return response.sendStatus(403);
-  }
-
-
-};
