@@ -1,6 +1,7 @@
 import dns from 'dns';
 import {Request} from 'express';
 import * as fs from 'fs';
+import {server} from "minecraft-lookup";
 import os from 'os';
 import {machineId} from 'node-machine-id';
 import path from 'path';
@@ -165,6 +166,32 @@ export const checkSqlString = (sql: string, fieldKeys: string[]): boolean => {
 
   return !removeAll(sql, [' ']);
 };
+
+/**
+ * Преобразую в строку
+ * @param date
+ */
+export const toString = (date: Date): string => {
+  return `${date.getFullYear().toString().padStart(4, '0')}.${date.getMonth().toString().padStart(2, '0')}.${date.getDay().toString().padStart(2, '0')}`+
+    `  ${date.getHours().toString().padStart(2, '0')}.${date.getMinutes().toString().padStart(2, '0')}.${date.getSeconds().toString().padStart(2, '0')}`;
+}
+
+/**
+ * Читаю дату из моего формата
+ * @param s
+ */
+export const fromString = (s: string): Date => {
+  try {
+    const [date, time] = s.split('  ');
+    const [year, month, day] = date.split('.');
+    const [hour, minute, second] = time.split('.');
+
+    return new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
+  } catch (e) {
+    console.log(e);
+    return new Date();
+  }
+}
 
 /**
  * Удаляю все вхождения этой строки

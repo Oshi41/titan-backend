@@ -5,12 +5,14 @@ import {Roles} from "../../types/index";
 import {onAddNews} from "./add_news";
 import {onAuth, onCheckAuth} from "./auth";
 import {onBusy} from "./busy";
+import {onCrashDelete} from "./crash_delete";
 import {downloadMulter} from "./crash_file";
 import {onDeleteNews} from "./delete_news";
 import {onDownload} from "./download";
 import {onGetNews} from "./get_news";
 import {onLogin} from "./login";
 import {onRegister} from "./register";
+import {onServerCrashes} from "./server_crashes";
 import {onServers} from "./servers";
 import {onSingleServer} from "./single_server";
 import {onRequestUsers} from "./users";
@@ -41,11 +43,19 @@ export const getApiRouter = (): { url: string, router: core.Router } => {
     bodyParser.json(),
     onDeleteNews);
 
-  apiRouter.post('/crash',
+  apiRouter.post('/crashes',
     downloadMulter.any(),
     onCheckAuth(t => t?.login != null),
     downloadMulter.single('file'),
     (req, res) => res.sendStatus(200));
+
+  apiRouter.get('/crashes',
+    onCheckAuth(t => t.roles.includes(Roles.Moderator)),
+    onServerCrashes);
+
+  apiRouter.delete('/crashes',
+    onCheckAuth(t => t.roles.includes(Roles.Moderator)),
+    onCrashDelete);
 
 
   return {url: '/api/1.0', router: apiRouter};

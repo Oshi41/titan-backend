@@ -4,7 +4,7 @@ import * as fs from "fs";
 import path from "path";
 import {v4 as uuid} from 'uuid';
 import {checkAndLog} from "../../log/index";
-import {createPath} from "../../utils/index";
+import {createPath, toString} from "../../utils/index";
 import * as multer from 'multer';
 
 /**
@@ -34,21 +34,6 @@ const selectDirectory = (request: Request,
   try {
     const byUser = path.resolve(folder, author);
     return callback(null, byUser);
-
-    // createPath(byUser, true)
-    //   .then(x => {
-    //     if (!x) {
-    //       console.log('cannot create user dir')
-    //       return callback(new Error('cannot create user dir'), '');
-    //     }
-    //
-    //     const date: Date = new Date();
-    //     const name = `${date.toDateString()} ${date.toTimeString()}.txt`;
-    //
-    //     fs.writeFileSync(name + '.comment', comment, 'utf-8');
-    //     return callback(null, name);
-    //   });
-
   } catch (e) {
     console.log(e);
     return callback(new Error(e + ''), '');
@@ -75,7 +60,7 @@ const selectFilename = (request: Request, file: Express.Multer.File, callback: (
     }
 
     const date: Date = new Date();
-    const fileName = `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}  ${date.getHours()}.${date.getMinutes()}.${date.getSeconds()}.txt`;
+    const fileName = toString(date) + '.txt';
 
     const fullName = path.resolve(destination, fileName);
     const commentFile = path.resolve(destination, fileName + '.comment');
@@ -100,25 +85,6 @@ const selectFilename = (request: Request, file: Express.Multer.File, callback: (
       });
   });
 
-
-  // const comment = request?.body?.comment as string;
-  // if (comment) {
-  //   console.log('no info about comment ')
-  //   return callback(new Error('no info about comment '), '');
-  // }
-  //
-  //
-  //
-  // try {
-  //   fs.writeFileSync(path.resolve(file.destination, fileName + '.comment'), comment, 'utf-8');
-  //   console.log('comment created');
-  //
-  //   const result: string = path.resolve(file.destination, fileName);
-  //   return callback(null, result);
-  // } catch (e) {
-  //   console.log(e);
-  //   return callback(new Error(e + ''), '');
-  // }
 }
 
 // @ts-ignore
