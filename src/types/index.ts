@@ -210,3 +210,13 @@ export enum Roles {
   Moderator = 'moderator',
   Comment = 'comment',
 }
+
+/**
+ * Описание краш репорта
+ */
+export interface Report {
+  file: string;
+  login: string;
+  date: string;
+  comment: string;
+}

@@ -1,10 +1,11 @@
 import bodyParser from "body-parser";
-import express from "express";
+import express, {Request} from "express";
 import * as core from "express-serve-static-core";
 import {Roles} from "../../types/index";
 import {onAddNews} from "./add_news";
 import {onAuth, onCheckAuth} from "./auth";
 import {onBusy} from "./busy";
+import {downloadMulter, onCrashPost} from "./crash_file";
 import {onDeleteNews} from "./delete_news";
 import {onDownload} from "./download";
 import {onGetNews} from "./get_news";
@@ -13,6 +14,7 @@ import {onRegister} from "./register";
 import {onServers} from "./servers";
 import {onSingleServer} from "./single_server";
 import {onRequestUsers} from "./users";
+
 
 /**
  * Возаращаю настроенный роутер
@@ -38,6 +40,12 @@ export const getApiRouter = (): { url: string, router: core.Router } => {
     onCheckAuth(t => t.roles.includes(Roles.Moderator)),
     bodyParser.json(),
     onDeleteNews);
+
+  apiRouter.post('/crash',
+    downloadMulter.any(),
+    onCheckAuth(t => t?.login != null),
+    downloadMulter.single('file'),
+    onCrashPost);
 
 
   return {url: '/api/1.0', router: apiRouter};
