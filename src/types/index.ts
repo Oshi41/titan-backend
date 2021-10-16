@@ -75,7 +75,15 @@ export interface BackendConfig {
  * Собственная информация о сервере
  */
 export interface OwnServerInfo {
+  /**
+   * адрес сервера
+   */
   address: string;
+
+  /**
+   * HTML виджет для статистики
+   */
+  htmlWidget: string;
 }
 
 /**
