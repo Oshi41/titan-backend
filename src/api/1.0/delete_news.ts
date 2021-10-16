@@ -12,15 +12,18 @@ export const onDeleteNews = async (request: Request, response: Response, next: N
       return;
     }
 
-    const recordId = request?.body?.id as string;
-    if (!recordId) {
+    const news: NewsItem = request?.body as NewsItem;
+
+    if (!news._id) {
       console.log('no id provided');
       return response.sendStatus(403);
     }
 
-    const wasDeleted: boolean = await newsStorage.delete({newsItem: {id: recordId} as NewsItem});
+    newsStorage().remove(news, (err, n) => {
+      const status = n > 0 ? 200 : 404;
+      return response.sendStatus(status);
+    });
 
-    return response.sendStatus(wasDeleted ? 200 : 404);
   } catch (e) {
     console.log(e);
     return response.sendStatus(403);

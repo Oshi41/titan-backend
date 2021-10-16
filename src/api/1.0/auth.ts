@@ -1,9 +1,10 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
 import {sign, verify} from 'jsonwebtoken';
-import {clientSecret, usersStorage} from "../../index";
+import {clientSecret} from "../../index";
 import {checkAndLog} from "../../log/index";
 import {Roles, User, UserAuthType, WebToken} from "../../types/index";
+import {getToken} from "../../utils/index";
 
 /**
  *
@@ -22,10 +23,10 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
     login: user.login,
     id: user.uuid,
     auth: UserAuthType.Own,
-    roles: getRoles(user)
+    roles: user.roles ?? []
   } as WebToken;
 
-  const signed: string = sign(token, clientSecret, {
+  const signed: string = sign(token, clientSecret(), {
     algorithm: 'HS256',
     expiresIn: '18h'
   });
@@ -41,28 +42,14 @@ export const onAuth = async (request: Request, response: Response, next: NextFun
  * @param tokenCheck
  */
 export const onCheckAuth = (tokenCheck: (t: WebToken) => boolean) => async (request: Request, response: Response, next: NextFunction) => {
-  const token = request?.headers?.authorization as string;
-  // || request?.query?.token
-  // || request?.headers["x-access-token"]
-  // ||
-  // || request?.cookies['access_token'];
-
   try {
+    const token: WebToken | undefined = getToken(request);
     if (!token) {
       checkAndLog(request);
       throw new Error('no token provided');
     }
 
-    const decoded = verify(token.replace('Bearer ', ''), clientSecret, {
-      algorithms: ['HS256']
-    }) as WebToken;
-
-    if (!decoded?.login) {
-      console.log(decoded);
-      throw new Error('cannot authenticate');
-    }
-
-    if (tokenCheck(decoded)) {
+    if (tokenCheck(token)) {
       next();
     } else {
       return response.sendStatus(401);
@@ -72,21 +59,7 @@ export const onCheckAuth = (tokenCheck: (t: WebToken) => boolean) => async (requ
     console.log(e);
     return response
       // удаляю web token
-      .header('x-auth-token', '')
+      .header('Authorization', '')
       .sendStatus(401);
   }
-}
-
-/**
- * Возвращаю список ролей для пользователя
- * @param user
- */
-const getRoles = (user: User): Roles[] => {
-  const result = [Roles.Comment];
-
-  if (user.login === usersStorage.admin().login && user.pass === usersStorage.admin().pass) {
-    result.push(Roles.Moderator);
-  }
-
-  return result;
 }

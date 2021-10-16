@@ -30,31 +30,33 @@ export const getApiRouter = (): { url: string, router: core.Router } => {
   apiRouter.get('/busy', onBusy);
   apiRouter.get('/login', onLogin, onAuth);
 
-  apiRouter.get('/users', onCheckAuth(t => t.roles.includes(Roles.Moderator)), onRequestUsers);
+  apiRouter.post('/getUsers',
+    onCheckAuth(t => t.roles.includes(Roles.UserView)),
+    onRequestUsers);
 
   apiRouter.get('/news', onGetNews);
   apiRouter.post('/news',
-    onCheckAuth(t => t.roles.includes(Roles.Moderator)),
+    onCheckAuth(t => t.roles.includes(Roles.NewsCreate)),
     bodyParser.json(),
     onAddNews);
 
   apiRouter.delete('/news',
-    onCheckAuth(t => t.roles.includes(Roles.Moderator)),
+    onCheckAuth(t => t.roles.includes(Roles.NewsDelete)),
     bodyParser.json(),
     onDeleteNews);
 
   apiRouter.post('/crashes',
     downloadMulter.any(),
-    onCheckAuth(t => t?.login != null),
+    onCheckAuth(t => t.roles.includes(Roles.CrashReportCreate)),
     downloadMulter.single('file'),
     (req, res) => res.sendStatus(200));
 
   apiRouter.get('/crashes',
-    onCheckAuth(t => t.roles.includes(Roles.Moderator)),
+    onCheckAuth(t => t.roles.includes(Roles.CrashReportView)),
     onServerCrashes);
 
   apiRouter.delete('/crashes',
-    onCheckAuth(t => t.roles.includes(Roles.Moderator)),
+    onCheckAuth(t => t.roles.includes(Roles.CrashReportDelete)),
     onCrashDelete);
 
 

@@ -1,9 +1,11 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
-import {usersStorage, config} from "../../index";
+import {config, newsStorage, transform, usersStorage} from "../../index";
 import {checkAndLog} from "../../log/index";
-import {User} from "../../types/index";
-import {getIp} from "../../utils/index";
+import {Roles, User, WebToken} from "../../types/index";
+import {distinct, getIp, getToken} from "../../utils/index";
+
+const basePerms = [Roles.CrashReportCreate, Roles.Comment];
 
 /**
  * endpont регистрации
@@ -12,38 +14,92 @@ import {getIp} from "../../utils/index";
  * @param next
  */
 export const onRegister = async (request: Request, response: Response, next: NextFunction) => {
-  console.log('register');
-  if (!checkAndLog(request)) {
-    return;
-  }
-
-  const user = {
-    ...request.body as User,
-    ip: getIp(request),
-  };
-
   try {
+    console.log('register');
+    if (!checkAndLog(request)) {
+      return;
+    }
 
-    if (config.maxUsersPerIP === 0) {
-      return response.sendStatus(403);
-    } else if (config.maxUsersPerIP > 0) {
-      const users: User[] = await usersStorage.find(['ip', user.ip]);
+    // новый пользователь
+    const user = {
+      ...request.body,
+      ip: getIp(request),
+    } as User;
 
-      if (users?.length === config.maxUsersPerIP) {
-        return response.status(403)
-          .send('too much accounts per IP');
+    // проверил данные
+    if (!user.login || !user.pass) {
+      console.log('not login or pass provided');
+      return response.status(403).send('not login or pass provided');
+    }
+
+    // Поменял пароль на шифрованный
+    user.pass = transform()(user.pass);
+
+    user.roles = distinct([...(user.roles ?? []), ...basePerms]);
+
+    // проверил макс. кол-во по IP
+    const error: string = await checkIpRestrictions(request, user);
+
+    // ошибка при проверке регистрации
+    if (error) {
+      console.log(error);
+      return response.status(403).send(error);
+    }
+
+    // вставляю документ
+    usersStorage().insert(user, (err, document) => {
+      // обработал ошибку
+      if (err) {
+        console.log(err);
+        return response.status(403).send(err.message);
       }
-    }
 
-    const added = await usersStorage.add(user);
-    if (added?.login === user.login) {
-      request.body = user;
+      // сохранил пользователя и иду дальше
+      request.body = document;
       next();
-    } else {
-      return response.sendStatus(400);
-    }
+    })
+
   } catch (e) {
     console.log(e);
-    return response.sendStatus(400);
+    return response.sendStatus(500);
   }
+}
+
+/**
+ * Обрабатываем макс. кол-во на IP
+ * @param request
+ * @param user
+ */
+const checkIpRestrictions = async (request: Request, user: User): Promise<string> => {
+  const perIP: number = config().maxUsersPerIP;
+
+  // Проверка на администратора
+  const token: WebToken | undefined = getToken(request);
+  if (token?.roles?.includes(Roles.UserCreate)) {
+    return '';
+  }
+
+  // Регистрация запрещена
+  if (perIP == 0) {
+    return 'registration id forbidden';
+  }
+
+  // Нет запретов
+  if (perIP < 0) {
+    return '';
+  }
+
+  return new Promise((resolve) => {
+    newsStorage().count({ip: user.ip}, (err: Error | null, count: number) => {
+      if (err) {
+        return resolve(err.message);
+      }
+
+      if (count >= perIP) {
+        return resolve('too much accounts per IP');
+      } else {
+        return resolve('');
+      }
+    });
+  });
 }

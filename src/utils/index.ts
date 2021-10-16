@@ -1,11 +1,14 @@
 import dns from 'dns';
-import {Request} from 'express';
+import {Request, Response} from 'express';
 import * as fs from 'fs';
+import {verify} from "jsonwebtoken";
 import {server} from "minecraft-lookup";
 import os from 'os';
 import {machineId} from 'node-machine-id';
 import path from 'path';
 import {v4 as uuid} from 'uuid';
+import {clientSecret} from "../index";
+import {WebToken} from "../types/index";
 
 /**
  * Возвращает текущий ip адрес
@@ -120,7 +123,8 @@ export const fromHexString = (s: string | undefined): string => {
   }
 
   // @ts-ignore
-  return `${s.substr(0, 8)}-${s.substr(8, 4)}-${s.substr(8 + 4, 4)}-${s.substr(8 + 4 + 4, 4)}-${s.substr(8 + 4 + 4 + 4)}`;
+  return `${s.substr(0, 8)}-${s.substr(8, 4)}-${s.substr(8 + 4, 4)}-${s.substr(8 + 4 + 4, 4)}-${s.substr(
+    8 + 4 + 4 + 4)}`;
 };
 
 /**
@@ -172,8 +176,10 @@ export const checkSqlString = (sql: string, fieldKeys: string[]): boolean => {
  * @param date
  */
 export const toString = (date: Date): string => {
-  return `${date.getFullYear().toString().padStart(4, '0')}.${date.getMonth().toString().padStart(2, '0')}.${date.getDay().toString().padStart(2, '0')}`+
-    `  ${date.getHours().toString().padStart(2, '0')}.${date.getMinutes().toString().padStart(2, '0')}.${date.getSeconds().toString().padStart(2, '0')}`;
+  return `${date.getFullYear().toString().padStart(4, '0')}.${date.getMonth().toString()
+      .padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}` +
+    `  ${date.getHours().toString().padStart(2, '0')}.${date.getMinutes().toString()
+      .padStart(2, '0')}.${date.getSeconds().toString().padStart(2, '0')}`;
 }
 
 /**
@@ -208,3 +214,42 @@ const removeAll = (source: string, patterns: string[], replace = ''): string => 
   }
   return source;
 };
+
+/**
+ * Возаращает токен пользователя из заголовка
+ * @param request - http(s) запрос
+ */
+export const getToken = (request: Request): WebToken | undefined => {
+  const token = request?.headers?.authorization as string;
+  if (!token) {
+    return undefined;
+  }
+
+  try {
+    const decoded = verify(token.replace('Bearer ', ''), clientSecret(), {
+      algorithms: ['HS256']
+    }) as WebToken;
+
+    if (!decoded?.login) {
+      return undefined;
+    }
+
+    return decoded;
+
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+}
+
+/**
+ * Возвращаю уникальные записи в массиве
+ * @param a
+ */
+export const distinct = <T>(a: T[]): T[] => {
+  function onlyUnique(value: T, index: number, self: T[]) {
+    return self.indexOf(value) === index;
+  }
+
+  return a.filter(onlyUnique);
+}

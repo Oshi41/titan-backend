@@ -5,18 +5,16 @@ import {checkAndLog} from "../../log/index";
 import {User} from "../../types/index";
 import {checkSqlString} from "../../utils/index";
 
-const allKeys = Object.keys({
-  login: '',
-  pass: '',
-  uuid: '',
-  ip: '',
-  access: '',
-  server: ''
-} as User);
-
 interface UsersResp {
   items: User[],
   count: number
+}
+
+interface UsersRequest {
+  page: number;
+  size: number;
+  query: any;
+  sort: any;
 }
 
 export const onRequestUsers = async (request: Request, response: Response, next: NextFunction) => {
@@ -27,35 +25,48 @@ export const onRequestUsers = async (request: Request, response: Response, next:
       return;
     }
 
-    const filter = (request.query['filter'] as string) ?? '';
-    const page = parseInt((request.query['page'] as string) ?? '0');
-    const pageSize = parseInt((request.query['size'] as string) ?? '0');
-
-    if (filter && !checkSqlString(filter, allKeys)) {
-      console.log('wrong sql query');
-      console.log(filter);
-      return response.sendStatus(403);
+    // Заполняю запрос необязательными данными
+    const req = {...request.body} as UsersRequest;
+    if (!req.page) {
+      req.page = 0;
+    }
+    if (!req.size) {
+      req.size = 10;
+    }
+    if (!req.query) {
+      req.query = {};
+    }
+    if (!req.sort) {
+      req.sort = {};
     }
 
-    usersStorage.getDb()
-      .all(`select *
-            from users ${filter}`, (err: Error | null, rows: User[]) => {
+    // запрос по пользователям с пагинацией и сортировкой
+    usersStorage().find(req.query)
+      .limit(req.size)
+      .skip(req.page * req.size)
+      .sort(req.sort)
+      .exec((err, documents) => {
         if (err) {
-          console.log(err.message);
-          return response.sendStatus(500);
+          console.log(err);
+          return response.status(403).send(err.message);
         }
 
-        let result = rows;
+        // тут запрашиваю общее кол-во по этому запросу
+        usersStorage().count(req.query, (err1, n) => {
+          if (err1) {
+            console.log(err1);
+            return response.status(403).send(err1.message);
+          }
 
-        if (page >= 0 && pageSize > 0) {
-          result = rows.slice(pageSize * page, pageSize * (page + 1));
-        }
+          // формирую ответ и высылаю
+          const resp: UsersResp = {
+            count: n,
+            items: documents
+          };
 
-        return response.json({
-          items: result,
-          count: rows.length
-        } as UsersResp);
-      });
+          return response.json(resp);
+        });
+      })
 
 
   } catch (e) {

@@ -13,7 +13,7 @@ const logs = path.resolve('logs');
  */
 const getStream = () => {
     const currentDate: Date = new Date();
-    const name = path.resolve('logs', `${currentDate.getDay()}.${currentDate.getMonth()}.${currentDate.getFullYear()}.log`);
+    const name = path.resolve('logs', `${currentDate.getDate().toString().padStart(2, '0')}.${currentDate.getMonth().toString().padStart(2, '0')}.${currentDate.getFullYear()}.log`);
 
     if (name !== logFile || !stream || !logFile) {
         logFile = name;

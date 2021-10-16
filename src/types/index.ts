@@ -23,7 +23,7 @@ export interface User {
   access: string;
 
   /**
-   * Сервер
+   * hash сервера
    */
   server?: string;
 
@@ -31,6 +31,11 @@ export interface User {
    * IP регистрации
    */
   ip?: string;
+
+  /**
+   * Роли пользователя
+   */
+  roles: Roles[];
 }
 
 /**
@@ -140,9 +145,9 @@ export interface ModInfo {
  */
 export interface NewsItem {
   /**
-   * uuid новости
+   * Уникальная 16-сивольная строка
    */
-  id: string;
+  _id: string;
 
   /**
    * Автор новости
@@ -152,7 +157,7 @@ export interface NewsItem {
   /**
    * Дата создания
    */
-  date: string;
+  date: Date;
 
   /**
    * Заголовок новости
@@ -167,7 +172,7 @@ export interface NewsItem {
   /**
    * изображение
    */
-  image: Blob;
+  image64: string;
 }
 
 /**
@@ -207,7 +212,29 @@ export enum UserAuthType {
  * Возможные типы данных
  */
 export enum Roles {
-  Moderator = 'moderator',
+  //
+  // CRUD для таблицы пользователей
+  // + View привилегия
+  //
+  UserView = 'user_v',
+  UserCreate = 'user_c',
+  UserEdit = 'user_e',
+  UserDelete = 'user_d',
+
+  //
+  // CRUD для таблицы новостей
+  //
+  NewsCreate = 'news_c',
+  NewsEdit = 'news_u',
+  NewsDelete = 'news_d',
+
+  //
+  // Для таблицы crash reports
+  //
+  CrashReportView = 'crash_v',
+  CrashReportCreate = 'crash_c',
+  CrashReportDelete = 'crash_d',
+
   Comment = 'comment',
 }
 
