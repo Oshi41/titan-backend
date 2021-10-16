@@ -4,10 +4,10 @@ import * as fs from "fs";
 import {server as minecraftServer} from "minecraft-lookup";
 import * as mc from "minecraft-protocol";
 import path from "path";
-import {admin, usersStorage} from "../../index";
-import {checkAndLog} from "../../log/index";
+import {admin} from "../../index";
 import {MinecraftServersFolder} from '../../init/srv';
-import {ForgeInfo, ModInfo, OwnServerInfo, ServerInfo} from "../../types/index";
+import {checkAndLog} from "../../log/index";
+import {ForgeInfo, ForgeModInfo, ModInfo, OwnServerInfo, ServerInfo} from "../../types/index";
 import {readJson} from "../../utils/index";
 
 const modsFile = path.resolve(MinecraftServersFolder, '../', '_mods.json');
@@ -121,13 +121,14 @@ const fillModsInfo = async (forge: ForgeInfo): Promise<boolean> => {
   const infos: ModInfo[] = await readJson<ModInfo[]>(modsFile);
   const map = new Map(infos.map(x => [x.modid, x]));
 
-  for (let element of forge.modinfo.modList) {
-    const version = `[${element.modid}], version ${element.version}`;
-    const info: ModInfo | undefined = map.get(element.modid);
-    const url = info?.page ?? '';
+  for (let i = 0; i < forge.modinfo.modList.length; i++) {
+    const original = forge.modinfo.modList[i] as ForgeModInfo;
 
-    element.modid = version;
-    element.version = url;
+    
+    forge.modinfo.modList[i] = {
+      ...map.get(original.modid),
+      modid: `[${original.modid}], version ${original.version}`,
+    } as ModInfo;
   }
 
   return true;

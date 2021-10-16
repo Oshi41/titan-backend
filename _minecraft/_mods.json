@@ -1,183 +1,228 @@
 [
   {
     "modid": "Forge",
-    "page": "https://files.minecraftforge.net/net/minecraftforge/forge/"
+    "page": "https://files.minecraftforge.net/net/minecraftforge/forge/ ",
+    "desc": "API, упрощающий создание модификаций"
   },
   {
     "modid": "CodeChickenCore",
-    "page": "https://github.com/Chicken-Bones/CodeChickenLib"
+    "page": "https://github.com/Chicken-Bones/CodeChickenLib ",
+    "desc": "библиотека, которая необходима для работы некоторых модов"
   },
   {
     "modid": "ivtoolkit",
-    "page": "https://www.curseforge.com/minecraft/mc-mods/ivtoolkit"
+    "page": "https://www.curseforge.com/minecraft/mc-mods/ivtoolkit ",
+    "desc": "фреймворк от Ivorforce, содержащий в себе классы и другие общие элементы для всех его модификаций"
   },
   {
     "modid": "NotEnoughItems",
-    "page": "https://minecraft.fandom.com/ru/wiki/Not_Enough_Items"
+    "page": "https://minecraft.fandom.com/ru/wiki/Not_Enough_Items ",
+    "desc": "модификация, позволяющая выдавать игроку любые доступные в игре предметы и блоки (можно сразу их зачаровывать, изменить действие зелья или параметры взрыва фейерверка), смотреть рецепты крафта, где и в каких рецептах используется какой-либо предмет, а также смотреть границы чанков и места, где могут спауниться мобы"
   },
   {
     "modid": "Enchiridion",
-    "page": "https://www.curseforge.com/minecraft/mc-mods/enchiridion"
+    "page": "https://www.curseforge.com/minecraft/mc-mods/enchiridion ",
+    "desc": ""
   },
   {
     "modid": "Enchiridion2",
-    "page": "https://www.curseforge.com/minecraft/mc-mods/enchiridion"
+    "page": "https://www.curseforge.com/minecraft/mc-mods/enchiridion ",
+    "desc": ""
   },
   {
     "modid": "exnihilo",
-    "page": "https://minecraft.fandom.com/ru/wiki/Ex_Nihilo"
+    "page": "https://minecraft.fandom.com/ru/wiki/Ex_Nihilo ",
+    "desc": ""
   },
   {
     "modid": "IC2",
-    "page": "https://minecraft.fandom.com/ru/wiki/IndustrialCraft_2"
+    "page": "https://minecraft.fandom.com/ru/wiki/IndustrialCraft_2 ",
+    "desc": ""
   },
   {
     "modid": "AdvancedSolarPanel",
-    "page": "https://minecraft.fandom.com/ru/wiki/Advanced_Solar_Panels"
+    "page": "https://minecraft.fandom.com/ru/wiki/Advanced_Solar_Panels ",
+    "desc": ""
   },
   {
     "modid": "appliedenergistics2",
-    "page": "https://ae-mod.info"
+    "page": "https://ae-mod.info ",
+    "desc": ""
   },
   {
     "modid": "bdlib",
-    "page": "https://www.curseforge.com/minecraft/mc-mods/bdlib"
+    "page": "https://www.curseforge.com/minecraft/mc-mods/bdlib ",
+    "desc": "специальная библиотека для работы с bdew-программистом и моддерами, связанными и разработанными изменениями"
   },
   {
     "modid": "ae2stuff",
-    "page": "https://ftb.fandom.com/wiki/AE2_Stuff"
+    "page": "https://ftb.fandom.com/wiki/AE2_Stuff ",
+    "desc": ""
   },
   {
     "modid": "AFSU",
-    "page": "https://minecraft.fandom.com/ru/wiki/AFSU_mod"
+    "page": "https://minecraft.fandom.com/ru/wiki/AFSU_mod ",
+    "desc": ""
   },
   {
     "modid": "aquaticabyss",
-    "page": "https://www.curseforge.com/minecraft/mc-mods/aquatic-abyss"
+    "page": "https://www.curseforge.com/minecraft/mc-mods/aquatic-abyss ",
+    "desc": ""
   },
   {
     "modid": "ClientFixer",
-    "page": "https://minecraft.fandom.com/ru/wiki/ClientFixer"
+    "page": "https://minecraft.fandom.com/ru/wiki/ClientFixer ",
+    "desc": "модификация для Minecraft: Java Edition, которая исправляет ошибку с невозможностью установки крупного масштаба интерфейса игры на некоторых мониторах при выборе русского и других языков на кириллической письменности"
   },
   {
     "modid": "Treecapitator",
-    "page": "https://minecraft.fandom.com/ru/wiki/TreeCapitator"
+    "page": "https://minecraft.fandom.com/ru/wiki/TreeCapitator ",
+    "desc": "модификация, с помощью которой можно срубить целое дерево, срубив лишь его нижний блок"
   },
   {
     "modid": "Avaritia",
-    "page": "https://minecraft.fandom.com/ru/wiki/Avaritia"
+    "page": "https://minecraft.fandom.com/ru/wiki/Avaritia ",
+    "desc": "модификация, добавляющая множество очень мощных инструментов и предметов, с очень дорогими рецептами для их создания"
   },
   {
     "modid": "avaritiaddons",
-    "page": "https://www.curseforge.com/minecraft/mc-mods/avaritiaddons"
+    "page": "https://www.curseforge.com/minecraft/mc-mods/avaritiaddons ",
+    "desc": "мод, который пытается расширить значение Бесконечности в моде Avaritia"
   },
   {
     "modid": "betterbuilderswands",
-    "page": "https://ftbwiki.org/Better_Builder%27s_Wands"
+    "page": "https://ftbwiki.org/Better_Builder%27s_Wands ",
+    "desc": "в игре появится четыре вида специальных палочек, которые в разной степени упростят процесс строительства и дадут вам возможность в короткие сроки сооружать огромные постройки"
   },
   {
     "modid": "divinerpg",
-    "page": "https://minecraft.fandom.com/ru/wiki/Divine_RPG"
+    "page": "https://minecraft.fandom.com/ru/wiki/Divine_RPG ",
+    "desc": "одна из крупнейших модификаций для Minecraft. Она массово расширяет игру, добавляя в мир большое разнообразие мобов, измерений, инструментов, оружия, брони, блоков, предметов и многое другое"
   },
   {
     "modid": "ThermalExpansion",
-    "page": "https://minecraft.fandom.com/ru/wiki/Thermal_Expansion"
+    "page": "https://minecraft.fandom.com/ru/wiki/Thermal_Expansion ",
+    "desc": "это модификация для SSP и SMP режимов Minecraft. Добавляет в игру новую механику обработки ресурсов, организацию автоматического производства, новые ресурсы, их обработчики, а также энергию и устройства её выработки и хранения"
   },
   {
     "modid": "DraconicEvolution",
-    "page": "https://minecraft.fandom.com/ru/wiki/Draconic_Evolution"
+    "page": "https://minecraft.fandom.com/ru/wiki/Draconic_Evolution ",
+    "desc": "модификация, создаваемая brandon3055, которая добавляет новые мощные инструменты, броню, машины и различные элементы. Модификация базируется вокруг своего блока руды — дракониевой руды (которая генерируется в Обычном и Нижнем мире, а также в Крае)"
   },
   {
     "modid": "Forestry",
-    "page": "https://minecraft.fandom.com/ru/wiki/Forestry"
+    "page": "https://minecraft.fandom.com/ru/wiki/Forestry ",
+    "desc": "модификация для Minecraft, добавляющая новые виды деревьев, предметов и механизмов. Особое внимание уделяется сельскому хозяйству, модификация предоставляет одну из крупнейших многоблочных структур, позволяющую создавать различные типы управляемых и ручных ферм"
   },
   {
     "modid": "ImmersiveEngineering",
-    "page": "https://minecraft.fandom.com/ru/wiki/Immersive_Engineering"
+    "page": "https://minecraft.fandom.com/ru/wiki/Immersive_Engineering ",
+    "desc": "модификация с чувством ретрофутуризма, добавляющая механизмы, множество красивых и функциональных многоблочных структур. Механизмы используют собственную энергию — Immersive Flux, которая конвертируется в Redstone Flux с коэффициентом 1:1"
   },
   {
     "modid": "ForgeMultipart",
-    "page": "https://ftb.fandom.com/wiki/Forge_Multipart"
+    "page": "https://ftb.fandom.com/wiki/Forge_Multipart ",
+    "desc": "библиотека для майнкрафт, которая содержит набор классов/функций и необходима для работы некоторых модов, например Tubes"
   },
   {
     "modid": "ExtraUtilities",
-    "page": "https://ftbwiki.org/Extra_Utilities"
+    "page": "https://ftbwiki.org/Extra_Utilities ",
+    "desc": "модификация без определённой тематики, добавляющая различные полезные предметы и элементы, такие как трубы, генераторы и магические вещи"
   },
   {
     "modid": "MineFactoryReloaded",
-    "page": "https://minecraft.fandom.com/ru/wiki/MineFactory_Reloaded"
+    "page": "https://minecraft.fandom.com/ru/wiki/MineFactory_Reloaded ",
+    "desc": "модификация, добавляющая много новых машин, автоматизирующих ряд задач, включая обработку ферм животных и растений, обработку руды и т. д. MineFactory Reloaded даже вводит собственную систему транспортировки, работающую на конвейерных лентах"
   },
   {
     "modid": "TConstruct",
-    "page": "https://minecraft.fandom.com/ru/wiki/Tinkers%27_Construct"
+    "page": "https://minecraft.fandom.com/ru/wiki/Tinkers%27_Construct ",
+    "desc": "модификация, позволяющая создавать инструменты и оружие из отдельных деталей, каждая из которых отвечает за те или иные параметры (в зависимости от её материала). Также модификация добавляет комбинированные инструменты (например, инструмент с функциями топора, лопаты и мотыги одновременно), новые типы оружия, улучшения инструментов/оружия (аналог зачаровывания) и некоторые другие аспекты игры"
   },
   {
     "modid": "MagicBees",
-    "page": "https://ftb.fandom.com/wiki/Magic_Bees"
+    "page": "https://ftb.fandom.com/wiki/Magic_Bees ",
+    "desc": "аддон для Forestry добавляющий 111 новых видов пчел"
   },
   {
     "modid": "EnderIO",
-    "page": "https://minecraft.fandom.com/ru/wiki/Ender_IO"
+    "page": "https://minecraft.fandom.com/ru/wiki/Ender_IO ",
+    "desc": ""
   },
   {
     "modid": "EnderTech",
-    "page": "https://ftb.fandom.com/wiki/EnderTech"
+    "page": "https://ftb.fandom.com/wiki/EnderTech ",
+    "desc": "модификация, добавляющая в игру различные машины, генераторы для производства RF энергии, приборы для удалённого доступа к предметам, трубы для транспортировки и резервуары для хранения предметов, жидкостей, энергии, а также провода для передачи сигналов красного камня"
   },
   {
     "modid": "foamfix",
-    "page": ""
+    "page": " ",
+    "desc": ""
   },
   {
     "modid": "FTBU",
-    "page": "https://feedthebeast.notion.site/FTB-Mod-Documentation-da2e359bad2449459d58d787edda3168"
+    "page": "https://feedthebeast.notion.site/FTB-Mod-Documentation-da2e359bad2449459d58d787edda3168 ",
+    "desc": "модификация добавляет несколько удобных команд, такие как /home и /warp, а так же дает возможность управлять приватами"
   },
   {
     "modid": "Project_Alchemy",
-    "page": "https://www.curseforge.com/minecraft/mc-mods/fullthrottle-alchemist"
+    "page": "https://www.curseforge.com/minecraft/mc-mods/fullthrottle-alchemist ",
+    "desc": ""
   },
   {
     "modid": "gendustry",
-    "page": "https://minecraft.fandom.com/ru/wiki/Gendustry"
+    "page": "https://minecraft.fandom.com/ru/wiki/Gendustry ",
+    "desc": "дополнение для модификации Forestry с открытым исходным кодом, добавляющий механизмы для генетических манипуляций пчёл, бабочек и деревьев"
   },
   {
     "modid": "journeymap",
-    "page": "https://minecraft.fandom.com/ru/wiki/JourneyMap"
+    "page": "https://minecraft.fandom.com/ru/wiki/JourneyMap ",
+    "desc": "модификация, которая добавляет в игру интерактивную мини-карту"
   },
   {
     "modid": "mo",
-    "page": "https://ftb.fandom.com/wiki/Matter_Overdrive"
+    "page": "https://ftb.fandom.com/wiki/Matter_Overdrive ",
+    "desc": "Крупный полуиндустриальный мод тематики будущего для Minecraft. Добавляет в игру плазменное оружие, энергию, аномалии, кибер-костюмы, новые руды и многое другое"
   },
   {
     "modid": "Mekanism",
-    "page": "https://minecraft.fandom.com/ru/wiki/Mekanism"
+    "page": "https://minecraft.fandom.com/ru/wiki/Mekanism ",
+    "desc": "модификация для SSP и SMP режимов Minecraft, добавляющая многоступенчатую систему обработки руды, организацию автоматического производства, газы, а также новый ресурс — осмий"
   },
   {
     "modid": "Metallurgy",
-    "page": "https://minecraft.fandom.com/ru/wiki/Metallurgy"
+    "page": "https://minecraft.fandom.com/ru/wiki/Metallurgy ",
+    "desc": "обширная модификация, добавляющая в игру много новых материалов, обработчиков и декоративных блоков"
   },
   {
     "modid": "TwilightForest",
-    "page": "https://minecraft.fandom.com/ru/wiki/Twilight_Forest"
+    "page": "https://minecraft.fandom.com/ru/wiki/Twilight_Forest ",
+    "desc": "модификация, добавляющая в игру новое измерение — Сумеречный лес. Сумеречный лес огромен, как и обычный мир, и почти весь покрыт деревьями"
   },
   {
     "modid": "Morph",
-    "page": "https://minecraft.fandom.com/ru/wiki/Morph"
+    "page": "https://minecraft.fandom.com/ru/wiki/Morph ",
+    "desc": "модификация, которая позволяет принять форму любого моба, которого вы убили, при этом возможно превращение в мобов из других модификаций. Мобов необходимо убивать любым оружием из Minecraft"
   },
   {
     "modid": "OreSpawn",
-    "page": "https://minecraft.fandom.com/ru/wiki/OreSpawn"
+    "page": "https://minecraft.fandom.com/ru/wiki/OreSpawn ",
+    "desc": "модификация, созданная TheyCallMeDanger. Добавляет огромное количество мобов и несколько новых игровых миров, а также новое оружие, руды и броню, а главное - возможность спаунить мобов в выживании без читерства"
   },
   {
     "modid": "ProjectE",
-    "page": "https://ftb.fandom.com/wiki/ProjectE"
+    "page": "https://ftb.fandom.com/wiki/ProjectE ",
+    "desc": "добавляет в майнкрафт возможности по трансмутации веществ, это позволит вам преобразовывать одни ресурсы в другие, а результатом таких трансмутаций будут могущественные артефакты, кольца, оружие, инструмент, новые виды брони с исключительными свойствами"
   },
   {
     "modid": "RotaryCraft",
-    "page": "https://rotarycraft.fandom.com/wiki/RotaryCraft_Wiki"
+    "page": "https://rotarycraft.fandom.com/wiki/RotaryCraft_Wiki ",
+    "desc": "огромнейший мод, который не добавляет никаких новых руд. Он вносит в игру множество новых машин, генераторов, инструментов и прочих вещей"
   },
   {
     "modid": "StorageDrawers",
-    "page": "https://ftb.fandom.com/wiki/Storage_Drawers"
+    "page": "https://ftb.fandom.com/wiki/Storage_Drawers ",
+    "desc": "ящики для хранения ваших материалов. Mод добавит разные ящики которые позволяет компактно и наглядно хранить ваши ресурсы, а так же улучшения для них"
   },
   {
     "modid": "ForgeMicroblock",

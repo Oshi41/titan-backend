@@ -112,6 +112,14 @@ export interface ServerInfo {
 }
 
 /**
+ * Тип описания мода, который приходит от Forge
+ */
+export interface ForgeModInfo {
+  modid: string,
+  version: string
+}
+
+/**
  * Описание forge сервера
  */
 export interface ForgeInfo {
@@ -127,17 +135,29 @@ export interface ForgeInfo {
   };
   modinfo: {
     type: string;
-    modList: { modid: string, version: string }[];
+    modList: (ModInfo | ForgeModInfo)[];
   };
   latency: number;
 }
 
 /**
- * Сайт данного мода
+ * Описание мода
  */
 export interface ModInfo {
+  /**
+   * ID мода
+   */
   modid: string;
+
+  /**
+   * Wiki страница
+   */
   page: string;
+
+  /**
+   * Описание
+   */
+  desc: string;
 }
 
 /**
