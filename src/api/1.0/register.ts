@@ -20,11 +20,7 @@ export const onRegister = async (request: Request, response: Response, next: Nex
       return;
     }
 
-    // новый пользователь
-    const user = {
-      ...request.body,
-      ip: getIp(request),
-    } as User;
+    const user = request.body;
 
     // проверил данные
     if (!user.login || !user.pass) {
@@ -32,18 +28,32 @@ export const onRegister = async (request: Request, response: Response, next: Nex
       return response.status(403).send('not login or pass provided');
     }
 
-    // Поменял пароль на шифрованный
-    user.pass = transform()(user.pass);
+    // является ли юзер админом
+    const admin: boolean = isAdmin(request);
 
-    user.roles = distinct([...(user.roles ?? []), ...basePerms]);
+    // запросили в неизменённом формате
+    if (admin && request.query.hasOwnProperty('unchanged')) {
+    } else {
+      // выставляю IP
+      user.ip = getIp(request);
 
-    // проверил макс. кол-во по IP
-    const error: string = await checkIpRestrictions(request, user);
+      // Поменял пароль на шифрованный
+      user.pass = transform()(user.pass);
 
-    // ошибка при проверке регистрации
-    if (error) {
-      console.log(error);
-      return response.status(403).send(error);
+      // выставляю роли
+      user.roles = distinct([...(user.roles ?? []), ...basePerms]);
+    }
+
+    // для не админов делаем проверку на IP
+    if (!admin) {
+      // проверил макс. кол-во по IP
+      const error: string = await checkIpRestrictions(user);
+
+      // ошибка при проверке регистрации
+      if (error) {
+        console.log(error);
+        return response.status(403).send(error);
+      }
     }
 
     // вставляю документ
@@ -66,18 +76,20 @@ export const onRegister = async (request: Request, response: Response, next: Nex
 }
 
 /**
- * Обрабатываем макс. кол-во на IP
+ * Проверка на привилегии создания пользователей
  * @param request
+ */
+const isAdmin = (request: Request): boolean => {
+  const token: WebToken | undefined = getToken(request);
+  return token?.roles?.includes(Roles.UserCreate) === true;
+}
+
+/**
+ * Обрабатываем макс. кол-во на IP
  * @param user
  */
-const checkIpRestrictions = async (request: Request, user: User): Promise<string> => {
+const checkIpRestrictions = async (user: User): Promise<string> => {
   const perIP: number = config().maxUsersPerIP;
-
-  // Проверка на администратора
-  const token: WebToken | undefined = getToken(request);
-  if (token?.roles?.includes(Roles.UserCreate)) {
-    return '';
-  }
 
   // Регистрация запрещена
   if (perIP == 0) {
