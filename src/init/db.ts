@@ -35,6 +35,9 @@ export const getUsersDb = async (): Promise<Nedb<User>> => {
   }
 
   db.loadDatabase();
+
+  // Раз в час
+  db.persistence.setAutocompactionInterval(1000 * 60 * 60);
   return db;
 }
 
@@ -59,5 +62,9 @@ export const getNewsDb = async (): Promise<Nedb<NewsItem>> => {
   }
 
   db.loadDatabase();
+
+  // Раз в час
+  db.persistence.setAutocompactionInterval(1000 * 60 * 60);
+
   return db;
 }

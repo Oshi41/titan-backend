@@ -8,6 +8,7 @@ import {onBusy} from "./busy";
 import {onCrashDelete} from "./crash_delete";
 import {downloadMulter} from "./crash_file";
 import {onDeleteNews} from "./delete_news";
+import {onUsersDelete} from "./delete_users";
 import {onDownload} from "./download";
 import {onGetNews} from "./get_news";
 import {onLogin} from "./login";
@@ -30,9 +31,15 @@ export const getApiRouter = (): { url: string, router: core.Router } => {
   apiRouter.get('/busy', onBusy);
   apiRouter.get('/login', onLogin, onAuth);
 
-  apiRouter.post('/getUsers',
+  apiRouter.post('/users',
     onCheckAuth(t => t.roles.includes(Roles.UserView)),
+    bodyParser.json(),
     onRequestUsers);
+
+  apiRouter.delete('/users',
+    onCheckAuth(t => t.roles.includes(Roles.UserDelete)),
+    bodyParser.json(),
+    onUsersDelete);
 
   apiRouter.get('/news', onGetNews);
   apiRouter.post('/news',

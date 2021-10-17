@@ -4,6 +4,7 @@ import {config, newsStorage, transform, usersStorage} from "../../index";
 import {checkAndLog} from "../../log/index";
 import {Roles, User, WebToken} from "../../types/index";
 import {distinct, getIp, getToken} from "../../utils/index";
+import {v4 as uuid} from 'uuid';
 
 const basePerms = [Roles.CrashReportCreate, Roles.Comment];
 
@@ -42,6 +43,9 @@ export const onRegister = async (request: Request, response: Response, next: Nex
 
       // выставляю роли
       user.roles = distinct([...(user.roles ?? []), ...basePerms]);
+
+      // Рандомный uuid
+      user.uuid = uuid();
     }
 
     // для не админов делаем проверку на IP

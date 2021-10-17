@@ -42,8 +42,8 @@ export const onRequestUsers = async (request: Request, response: Response, next:
 
     // запрос по пользователям с пагинацией и сортировкой
     usersStorage().find(req.query)
-      .limit(req.size)
       .skip(req.page * req.size)
+      .limit(req.size)
       .sort(req.sort)
       .exec((err, documents) => {
         if (err) {
