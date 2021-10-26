@@ -67,7 +67,7 @@ export const onRequestUsers = async (request: Request, response: Response, next:
 
           // Заполняю признак белого списка
           for (let usr of documents) {
-            usr.whitelisted = !whitelist || whitelist.some(x => x.uuid === usr.uuid);
+            usr.whitelisted = !whitelist || whitelist.some(x => x.name === usr.login);
           }
 
           // формирую ответ и высылаю

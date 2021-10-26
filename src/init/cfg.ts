@@ -15,6 +15,7 @@ const defaults = {
   https: 443,
   http: 80,
   maxUsersPerIP: 3,
+  whitelistPath: '/whitelist.json'
 } as BackendConfig;
 
 /**
