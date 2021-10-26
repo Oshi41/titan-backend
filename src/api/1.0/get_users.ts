@@ -1,9 +1,9 @@
 import {Request, Response} from "express";
 import {NextFunction} from "express-serve-static-core";
-import {usersStorage} from "../../index";
+import {config, usersStorage} from "../../index";
 import {checkAndLog} from "../../log/index";
-import {User} from "../../types/index";
-import {checkSqlString} from "../../utils/index";
+import {User, WhitelistItem} from "../../types/index";
+import {checkSqlString, readJson} from "../../utils/index";
 
 interface UsersResp {
   items: User[],
@@ -40,6 +40,7 @@ export const onRequestUsers = async (request: Request, response: Response, next:
       req.sort = {};
     }
 
+
     // запрос по пользователям с пагинацией и сортировкой
     usersStorage().find(req.query)
       .skip(req.page * req.size)
@@ -52,10 +53,21 @@ export const onRequestUsers = async (request: Request, response: Response, next:
         }
 
         // тут запрашиваю общее кол-во по этому запросу
-        usersStorage().count(req.query, (err1, n) => {
+        usersStorage().count(req.query, async (err1, n) => {
           if (err1) {
             console.log(err1);
             return response.status(403).send(err1.message);
+          }
+
+          let whitelist: WhitelistItem[] | null = null;
+
+          if (config().whitelistPath) {
+            whitelist = await readJson<WhitelistItem[]>(config().whitelistPath as string);
+          }
+
+          // Заполняю признак белого списка
+          for (let usr of documents) {
+            usr.whitelisted = !whitelist || whitelist.some(x => x.uuid === usr.uuid);
           }
 
           // формирую ответ и высылаю

@@ -10,13 +10,14 @@ import {downloadMulter} from "./crash_file";
 import {onDeleteNews} from "./delete_news";
 import {onUsersDelete} from "./delete_users";
 import {onDownload} from "./download";
+import {onEditUsers} from "./edit_users";
 import {onGetNews} from "./get_news";
 import {onLogin} from "./login";
 import {onRegister} from "./register";
 import {onServerCrashes} from "./server_crashes";
 import {onServers} from "./servers";
 import {onSingleServer} from "./single_server";
-import {onRequestUsers} from "./users";
+import {onRequestUsers} from "./get_users";
 
 
 /**
@@ -35,6 +36,11 @@ export const getApiRouter = (): { url: string, router: core.Router } => {
     onCheckAuth(t => t.roles.includes(Roles.UserView)),
     bodyParser.json(),
     onRequestUsers);
+
+  apiRouter.post('/edit_users',
+    onCheckAuth(t => t.roles.includes(Roles.UserEdit)),
+    bodyParser.json(),
+    onEditUsers);
 
   apiRouter.delete('/users',
     onCheckAuth(t => t.roles.includes(Roles.UserDelete)),

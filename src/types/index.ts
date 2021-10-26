@@ -3,6 +3,11 @@
  */
 export interface User {
   /**
+   * Уникальный ID пользователя
+   */
+  _id?: string;
+
+  /**
    * Логин
    */
   login: string;
@@ -36,6 +41,11 @@ export interface User {
    * Роли пользователя
    */
   roles: Roles[];
+
+  /**
+   * Входит ли в белый список
+   */
+  whitelisted?: boolean;
 }
 
 /**
@@ -69,6 +79,11 @@ export interface BackendConfig {
    * Максимальное кол-во учёток под одним IP адресом
    */
   maxUsersPerIP: number;
+
+  /**
+   * Путь к белому списку
+   */
+  whitelistPath?: string;
 }
 
 /**
@@ -275,4 +290,12 @@ export interface Report {
   comment: string;
   content: string;
   file: string;
+}
+
+/**
+ * Элемент в белом списке Minecraft
+ */
+export interface WhitelistItem {
+  uuid: string;
+  name: string;
 }
