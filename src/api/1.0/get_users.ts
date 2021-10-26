@@ -63,6 +63,8 @@ export const onRequestUsers = async (request: Request, response: Response, next:
 
           if (config().whitelistPath) {
             whitelist = await readJson<WhitelistItem[]>(config().whitelistPath as string);
+            console.log('whitelist');
+            console.log(whitelist);
           }
 
           // Заполняю признак белого списка
